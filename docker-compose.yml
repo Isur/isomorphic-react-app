@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:12
+        container_name: postgres_database
+        restart: always
+        volumes:
+            - ./configs/postgresql:/docker-entrypoint-initdb.d/
+            - ./data/psql:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.pl
+            PGADMIN_DEFAULT_PASSWORD: admin
+        volumes:
+            - pgadmin:/var/lib/pgadmin
+        ports:
+            - "5050:80"
+        depends_on:
+            - db
+    boileplate:
+        build: .
+        container_name: boileplate
+        ports:
+            - "3000:3000"
+        environment:
+            - DATABASE_HOST=db
+        depends_on:
+            - db
+volumes:
+    pgadmin:
