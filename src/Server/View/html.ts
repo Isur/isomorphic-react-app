@@ -10,9 +10,9 @@ export default (app: string) => {
         ${process.env.NODE_ENV === "production" ? `<link rel="stylesheet" href="/style.css">` : ""}
       </head>
     <body>
-      <div id="react-app">${app}</div>
-      <script type="text/javascript" src="/client.js"></script>
-     </body>
+        <div id="react-app">${app}</div>
+        <script type="text/javascript" src="/client.js"></script>
+    </body>
   </html>
 `;
 };

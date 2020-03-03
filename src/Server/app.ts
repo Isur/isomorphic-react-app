@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import { react } from "./Middlewares/react";
 import view from "./View/html";
+import routes from "./api";
 
 const app =  express();
 app.use(bodyParser.json());
@@ -15,11 +16,7 @@ if(process.env.NODE_ENV === "development") {
   app.use("/style.css", express.static("style.css"));
 }
 
-app.get("/api", (req: Request, res: Response) => {
-  res.json({
-    server: "This is server, could be hot reloaded.",
-  });
-});
+app.use("/api", routes);
 
 app.get("*", (req, res) => {
   res.send(view(react()));
