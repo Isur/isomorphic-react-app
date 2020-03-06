@@ -1,6 +1,9 @@
 import http from "http";
 import chalk from "chalk";
+import dotenv from "dotenv";
 import app from "./Server/app";
+
+dotenv.config();
 
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);

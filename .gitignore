@@ -15,3 +15,5 @@ npm-debug.log
 /coverage
 # Database
 /data
+# Environment Config
+.env

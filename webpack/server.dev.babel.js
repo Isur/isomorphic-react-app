@@ -1,6 +1,7 @@
 import path from "path";
 import nodeExternals from "webpack-node-externals";
 import webpack from "webpack";
+import Dotenv from "dotenv-webpack";
 import StartServerPlugin from "start-server-webpack-plugin";
 
 export default {
@@ -51,6 +52,7 @@ export default {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },
   plugins: [
+    new Dotenv(),
     new StartServerPlugin('server.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
