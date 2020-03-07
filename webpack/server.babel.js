@@ -1,5 +1,6 @@
 import path from "path";
 import nodeExternals from 'webpack-node-externals';
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 export default {
   target: "async-node",
@@ -14,6 +15,11 @@ export default {
     chunkFilename: "[name].server.js",
     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: "./.env", to: "" },
+    ]),
+  ],
   externals: [nodeExternals()],
   module: {
     rules: [
