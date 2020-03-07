@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="App">
       <Switch>
-        <Route path="/" exact render={HomePage} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/example" exact component={Example} />
         <Route component={ErrorPage} />
       </Switch>

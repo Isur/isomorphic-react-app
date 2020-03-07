@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { react } from "./Middlewares/react";
-import view from "./View/html";
 import routes from "./api";
 
 const app =  express();
@@ -19,7 +18,7 @@ if(process.env.NODE_ENV === "development") {
 app.use("/api", routes);
 
 app.get("*", (req, res) => {
-  res.send(view(react()));
+  res.send(react(req));
 });
 
 export default app;
