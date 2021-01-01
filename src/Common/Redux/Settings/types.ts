@@ -1,13 +1,23 @@
-export interface IStateSettings {
+export interface StateSettings {
   app: string,
-  theme: themes,
+  theme: SettingThemes,
+  serverVersion: string,
 }
-export type themes = "dark" | "light";
+export type SettingThemes = "dark" | "light";
 export const CHANGE_THEME = `[SETTINGS] CHANGE_THEME`;
+export const FETCH_SETTINGS = `[SETTINGS] FETCH SETTINGS`;
 
-interface IActionChangeTheme {
+interface ActionChangeTheme {
   type: typeof CHANGE_THEME,
-  payload: themes,
+  payload: SettingThemes,
 }
 
-export type SettingsActionTypes = IActionChangeTheme;
+interface ActionFetchSettings {
+  type: typeof FETCH_SETTINGS,
+  payload: {
+    app: string,
+    serverVersion: string,
+  },
+}
+
+export type SettingsActionTypes = ActionChangeTheme | ActionFetchSettings;

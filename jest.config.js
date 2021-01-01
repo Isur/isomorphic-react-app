@@ -15,7 +15,7 @@ module.exports = {
   ],
   coverageDirectory: "<rootDir>/coverage/",
   displayName: {
-    name: "Boilerplate",
+    name: "Isomorphic-Web-App",
     color: "red",
   },
   verbose: true,

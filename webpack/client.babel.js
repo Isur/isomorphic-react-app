@@ -16,9 +16,9 @@ export default {
     publicPath: "/",
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: "./public", to: "public/" },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "./public", to: "public/" }]
+    }),
     new MiniCssExtractPlugin({
       filename: "style.css",
     }),

@@ -1,21 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 import { createBrowserHistory, History } from "history";
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 import { Store } from "./Common/Redux/store";
 import App from "./Common/App";
 
 const history: History = createBrowserHistory();
-
 const initData = document.getElementById("initData").textContent;
-const parsedData = JSON.parse(initData);
+const jsonData = JSON.parse(initData);
+const store = Store(history, jsonData);
 
 ReactDOM.hydrate(
-  <Provider store={Store(history, parsedData)}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+  <CookiesProvider>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </Provider>
+  </CookiesProvider>,
   document.getElementById("react-app"),
 );

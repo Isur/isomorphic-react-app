@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { hot } from "react-hot-loader";
-import Example from "../Client/Components/Example/Example";
-
-// Pages
-import ErrorPage from "../Client/Pages/ErrorPage";
-import HomePage from "../Client/Pages/HomePage";
+import PrivateRoute from "../Client/Components/PrivateRoute";
+import Homepage from "../Client/Pages/Homepage";
+import ErrorPage from "../Client/Pages/Error";
+import LoginPage from "../Client/Pages/Auth/LoginPage";
+import RegisterPage from "../Client/Pages/Auth/RegisterPage";
+import AuthRoute from "../Client/Components/AuthRoute";
+import { initFetch } from "./Redux/Auth/actions";
+import "../Client/Styles/global.scss";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initFetch());
+  }, []);
+
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/example" exact component={Example} />
-        <Route component={ErrorPage} />
-      </Switch>
+      <>
+        <Switch>
+          <Route path="/" exact component={Homepage} />
+          <AuthRoute path="/login" exact component={LoginPage} />
+          <AuthRoute path="/register" exact component={RegisterPage} />
+          <PrivateRoute path="/private" exact component={Homepage} />
+          <Route path="*" component={ErrorPage} />
+        </Switch>
+      </>
     </div>
   );
 };

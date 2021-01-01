@@ -16,9 +16,11 @@ export default {
     devtoolModuleFilenameTemplate: "[absolute-resource-path]"
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: "./.env", to: "" },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./.env", to: "" }
+      ]
+    }),
   ],
   externals: [nodeExternals()],
   module: {

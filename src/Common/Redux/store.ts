@@ -3,21 +3,25 @@ import thunk, { ThunkDispatch } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { CallHistoryMethodAction, connectRouter, routerMiddleware, RouterState } from "connected-react-router";
 import { History } from "history";
-import { IStateSettings, SettingsActionTypes } from "./Settings/types";
+import { StateSettings, SettingsActionTypes } from "./Settings/types";
 import { settingsReducer } from "./Settings/reducers";
+import { authReducer } from "./Auth/reducers";
+import { AuthState } from "./Auth/types";
 
 export const rootReducer = (history: History) => combineReducers({
   router: connectRouter(history),
   settings: settingsReducer,
+  auth: authReducer,
 });
 
-export interface IAppState {
+export interface AppState {
   router: RouterState,
-  settings: IStateSettings,
+  settings: StateSettings,
+  auth: AuthState,
 }
 
 export type ActionTypes = SettingsActionTypes;
-export type AppThunkDispatch = ThunkDispatch<IAppState, undefined, ActionTypes | CallHistoryMethodAction>
+export type AppThunkDispatch = ThunkDispatch<AppState, undefined, ActionTypes | CallHistoryMethodAction>
 
 export const Store = (history: History, initData: Object = null) => {
   const historyMiddleware = routerMiddleware(history);

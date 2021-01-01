@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To start this project you need `npm`, `node` an `linux` system.
+To start this project you need `npm`, `node`, `postgresql` database and `linux` system.
 
 Recommended: `docker`, `docker-compose`
 
@@ -30,8 +30,7 @@ To run development envinronment use
 
 `npm run dev`
 
-It will test code with eslint rules and fix it if possible.
-Afterwards webpack.ts will build and launch application.
+Webpack.ts will build and launch application.
 
 ## Running the tests
 ### Unit tests
@@ -41,17 +40,16 @@ Test and generate coverage report:
 
 Test, watch and generate coverage report:
 
-`npm run test_watch`
+`npm run test:watch`
 
 ### Linter
-Run linter:
+Run linter and if possible, fix:
 
-`npm run linter`
+`npm run lint`
 
-and fix if possible:
+Linter with max warning set to 0:
 
-`npm run linter-fix`
-
+`npm run linter-no-warnings`
 ## Deployment:
 
 If you want to deploy your app on live system use:
@@ -68,9 +66,6 @@ You can also build docker image:
 
 `docker build -t [name] .`
 
-To run with database and pgAdmin:
-
-`docker-compose up`
 
 ## Built with
 
@@ -82,6 +77,7 @@ To run with database and pgAdmin:
 - [Typescript](https://www.typescriptlang.org/index.html)
 - [SASS](https://sass-lang.com/)
 - [Eslint](https://eslint.org/)
+- [Prisma](https://www.prisma.io/)
 
 ## Authors
 - **Artur Bednarczyk** - *Initial work* -  [Isur](https://github.com/isur)

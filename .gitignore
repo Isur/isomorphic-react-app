@@ -13,7 +13,5 @@ npm-debug.log
 /.idea
 # Testing Coverage
 /coverage
-# Database
-/data
 # Environment Config
 .env
