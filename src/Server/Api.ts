@@ -1,7 +1,7 @@
 import { Router } from "express";
 import PromiseRouter from "express-promise-router";
 import { ApiBadEndpoint, ApiLogger } from "./Middlewares";
-import { ExampleModule, AuthModule, UsersModule } from "./Modules";
+import { AuthModule, SettingsModule, UsersModule } from "./Modules";
 
 class Api {
   router: Router;
@@ -12,11 +12,11 @@ class Api {
   }
 
   initRoutes = () => {
-    this.router.use(ApiLogger.execute);
-    this.router.use("/example", ExampleModule.ExampleController.router);
+    this.router.use(ApiLogger);
     this.router.use("/auth", AuthModule.AuthController.router);
     this.router.use("/users", UsersModule.UsersController.router);
-    this.router.use(ApiBadEndpoint.execute);
+    this.router.use("/settings", SettingsModule.SettingsController.router);
+    this.router.use(ApiBadEndpoint);
   }
 }
 

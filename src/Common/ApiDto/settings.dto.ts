@@ -1,4 +1,3 @@
-export interface GetSettingsResponseDto {
-  version: string,
-  appName: string,
-}
+import { SettingsObject } from "../Interfaces/settings.inteface";
+
+export interface GetSettingsResponseDto extends SettingsObject { }

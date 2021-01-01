@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import "./Utils/Database";
 import { AppConfig, Config } from "./Config";
-import { ApiError, ReactMiddleware, RouterCache } from "./Middlewares";
+import { ApiAuth, ApiError, ReactMiddleware, RouterCache } from "./Middlewares";
 import Api from "./Api";
 
 class App {
@@ -32,8 +32,8 @@ class App {
 
   initRoutes() {
     this.express.use("/api", Api.router);
-    this.express.use(ApiError.execute);
-    this.express.get("*", (req, res) => {
+    this.express.use(ApiError);
+    this.express.get("*", ApiAuth(false), (req, res) => {
       res.send(ReactMiddleware.getHtml(req));
     });
   }

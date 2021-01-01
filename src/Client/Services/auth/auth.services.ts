@@ -1,5 +1,5 @@
 import { ApiService } from "../Api/api.service";
-import { InitFetchDto, LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from "../../../Common/ApiDto/auth.dto";
+import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from "../../../Common/ApiDto/auth.dto";
 
 class AuthService extends ApiService {
   async login(data: LoginRequestDto): Promise<LoginResponseDto> {
@@ -13,11 +13,6 @@ class AuthService extends ApiService {
 
   async logout(): Promise<void> {
     return await this.requestService.get(`logout`);
-  }
-
-  async initFetch(): Promise<string> {
-    const { userId } = await this.requestService.get<InitFetchDto>("profile");
-    return userId;
   }
 }
 

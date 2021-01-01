@@ -8,4 +8,4 @@ class ApiBadEndpoint implements Middleware {
   }
 }
 
-export default new ApiBadEndpoint();
+export default new ApiBadEndpoint().execute;

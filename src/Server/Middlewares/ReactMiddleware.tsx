@@ -8,16 +8,20 @@ import { createMemoryHistory } from "history";
 import serializeJavascript from "serialize-javascript";
 import App from "../../Common/App";
 import html from "../View/html";
-import { Store } from "../../Common/Redux/store";
+import { AppState, Store } from "../../Common/Redux/store";
 
 class ReactMiddleware {
   getHtml = (req: Request): string => {
     const context = {};
-    const initData = {
+    const initData: Partial<AppState> = {
       settings: {
         app: "Isomorphic React App",
         theme: "light",
-        serverVersion: 1, // TODO: config file
+        serverVersion: "1",
+      },
+      auth: {
+        userid: req.session.userid,
+        error: null,
       },
     };
     const history = createMemoryHistory({

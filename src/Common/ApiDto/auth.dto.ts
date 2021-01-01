@@ -8,7 +8,7 @@ export interface RegisterRequestDto {
 export type RegisterResponseDto = string;
 
 export interface LoginRequestDto {
-  email: string,
+  login: string,
   password: string,
 }
 
@@ -17,6 +17,4 @@ export interface LoginResponseDto {
   userId: string,
 }
 
-export interface InitFetchDto {
-  userId: string,
-}
+export type LogoutResponseDto = string;

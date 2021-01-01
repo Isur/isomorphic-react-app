@@ -17,4 +17,4 @@ class ApiError implements MiddlewareError {
 
 export default new ApiError(
   LogMachine,
-);
+).execute;

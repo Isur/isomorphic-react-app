@@ -20,4 +20,4 @@ class ApiValidator implements MiddlewareFunction {
   }
 }
 
-export default new ApiValidator();
+export default new ApiValidator().execute;

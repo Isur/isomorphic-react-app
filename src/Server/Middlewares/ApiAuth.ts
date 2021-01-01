@@ -2,15 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import { SessionService, Session } from "../Modules/Sessions";
 import { HTTPError } from "../Utils";
 import JWT, { JwtHelper } from "../Utils/JWT";
-import { Middleware } from "./Middleware.interface";
+import { MiddlewareFunction } from "./Middleware.interface";
 
-class Authenticate implements Middleware {
+class Authenticate implements MiddlewareFunction {
   constructor(
     private readonly _jwt: JwtHelper,
     private readonly _sessionService: SessionService,
   ) {  }
 
-  execute = async (req: Request, res: Response, next: NextFunction) => {
+  execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
     const token = this.getToken(req);
 
     try {
@@ -21,9 +21,16 @@ class Authenticate implements Middleware {
         userid: session.userId,
         id: session.sessionId,
       };
-      next();
     } catch(error) {
-      throw new HTTPError(403, "Unauthorized");
+      if(required) throw new HTTPError(403, "Unauthorized");
+      else {
+        req.session = {
+          userid: null,
+          id: null,
+        };
+      }
+    } finally {
+      next();
     }
   }
 
@@ -38,4 +45,4 @@ class Authenticate implements Middleware {
 
 export default new Authenticate(
   JWT, Session,
-);
+).execute;

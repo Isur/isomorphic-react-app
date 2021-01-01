@@ -1,3 +1,4 @@
 export * as AuthModule from "./Auth";
-export * as ExampleModule from "./Example";
 export * as UsersModule from "./Users";
+export * as SessionModule from "./Sessions";
+export * as SettingsModule from "./Settings";

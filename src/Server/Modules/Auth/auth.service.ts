@@ -21,7 +21,7 @@ class Auth implements AuthService {
   login = async (username: string, password: string): Promise<LoginResponse> => {
     const user = await this._db.user.findFirst({ where: { OR: [{ username }, { email: username }] } });
     if(!user) throw new HTTPError(401, "Bad login and/or password");
-    if(!this._bcrypt.compareHash(password, user.password)) throw new HTTPError(401, "Bad login and/or password");
+    if(await this._bcrypt.compareHash(password, user.password) === false) throw new HTTPError(401, "Bad login and/or password");
     const sessionId = await this._sessionService.createSession(user.id);
     const token = this._jwt.generateAuthToken(user.id, sessionId);
     return { token, userId: user.id };

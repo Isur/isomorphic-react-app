@@ -17,4 +17,4 @@ class ApiLogger implements Middleware {
 
 export default new ApiLogger(
   LogMachine,
-);
+).execute;
