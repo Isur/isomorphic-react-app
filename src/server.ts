@@ -1,10 +1,15 @@
 import http from "http";
 import chalk from "chalk";
 import "reflect-metadata";
-import app from "./Server/App";
-import { AppConfig } from "./Server/Config";
+import Container from "typedi";
+import App from "./Server/App";
+import { Config } from "./Server/Config";
+import { Logger } from "./Server/Utils";
 
-const port = AppConfig.environment.port || "3000";
+const config = Container.get<Config>(Config);
+
+const { env, port } = config.environment;
+const app = Container.get<App>(App);
 const server = http.createServer(app.express);
 
 const originalApp = app.express;
@@ -17,7 +22,7 @@ if(module.hot) {
   module.hot.accept("./Server/App", async () => {
     let newApp = app.express;
     if(originalApp === newApp) {
-      newApp = (await import("./Server/App")).default.express;
+      newApp = Container.get<App>((await import("./Server/App")).default).express;
     }
     server.removeListener("request", currentApp);
     server.on("request", newApp);
@@ -25,11 +30,10 @@ if(module.hot) {
   });
 }
 
-// eslint-disable-next-line no-console
-console.log(`
+Logger.Log(`
   Isomorphic App listening on port ${chalk.red.bold(port)}
-  Env: ${chalk.yellow.bold(AppConfig.environment.env)}
-  ${AppConfig.environment.env === "development" && `Address: http://localhost:${port}`}
+  Env: ${chalk.yellow.bold(env)}
+  ${env === "development" && `Address: http://localhost:${port}`}
  `);
 
 process.on("unhandledRejection", (reason: string, promise: Promise<unknown>) => {

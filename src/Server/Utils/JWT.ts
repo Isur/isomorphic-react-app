@@ -1,31 +1,25 @@
 import jwt from "jsonwebtoken";
-import { AppConfig, Config } from "../Config";
+import { Inject, Service } from "typedi";
+import { Config } from "../Config";
 
 interface JwtToken {
   iat: number,
   userid: string,
   sessionid: string,
 }
-
-export interface JwtHelper {
-  generateAuthToken: (userid: string, sessionId: string) => string,
-  tokenVerify: (token: string) => JwtToken,
-}
-
-class JWT implements JwtHelper {
-  private readonly _config: Config
-  constructor(config: Config) {
-    this._config = config;
-  }
+@Service()
+class JWT {
+  @Inject()
+  private readonly config: Config;
 
   generateAuthToken = (userid: string, sessionId: string) => {
-    return jwt.sign({ userid, sessionId }, this._config.environment.secret, { expiresIn: this._config.cookies.expiration });
+    return jwt.sign({ userid, sessionId }, this.config.environment.secret, { expiresIn: this.config.cookies.expiration });
   }
 
   tokenVerify = (token: string) => {
-    return jwt.verify(token, this._config.environment.secret, (error, decoded: JwtToken) => {
+    return jwt.verify(token, this.config.environment.secret, (error: unknown, decoded: JwtToken) => {
       if(error) return undefined;
-      if(decoded === undefined || Date.now() - decoded.iat * 1000 > this._config.cookies.maxAge)  {
+      if(decoded === undefined || Date.now() - decoded.iat * 1000 > this.config.cookies.maxAge)  {
         return undefined;
       }
       return decoded;
@@ -33,6 +27,4 @@ class JWT implements JwtHelper {
   }
 }
 
-export default new JWT(
-  AppConfig,
-);
+export default JWT;

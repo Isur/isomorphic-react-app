@@ -1,30 +1,30 @@
-import dotenv from "dotenv";
-import { Config, Containers, Cookies, Environment, EnvironmentType } from "./config.interface";
+import { Service } from "typedi";
+import { Apps, Cookies, Environment, EnvironmentType } from "./config.interface";
 
-class AppConfig implements Config {
+@Service()
+class Config {
   environment: Environment;
   cookies: Cookies;
-  containers: Containers;
+  apps: Apps;
 
   constructor() {
-    dotenv.config();
     this.loadFromEnv();
     this.config();
   }
 
-  loadFromEnv() {
+  private loadFromEnv() {
     this.environment = {
       env: process.env.NODE_ENV as EnvironmentType,
       port: process.env.PORT,
       secret: process.env.SECRET,
     };
-    this.containers = {
+    this.apps = {
 
     };
   }
 
-  config = () => {
-    const HOUR = 1000 * 60 * 60;
+  private config = () => {
+    const HOUR = 1000 * 60 * 60; // TODO: to constants
 
     this.cookies = {
       expiration: "10h",
@@ -34,4 +34,4 @@ class AppConfig implements Config {
   }
 }
 
-export default new AppConfig();
+export default Config;

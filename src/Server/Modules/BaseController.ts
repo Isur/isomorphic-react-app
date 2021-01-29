@@ -1,14 +1,9 @@
 import { Router } from "express";
 import PromiseRouter from "express-promise-router";
 
-export interface Routable {
-  router: Router,
-  _initRoutes: () => void,
-}
-
-class BaseController {
+abstract class BaseController {
   public router: Router;
-
+  protected abstract _initRoutes: () => void;
   constructor() {
     this.router = PromiseRouter();
   }

@@ -2,22 +2,24 @@ import express, { Express } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import "./Utils/Database";
-import { AppConfig, Config } from "./Config";
+import { Service } from "typedi";
+import { Config } from "./Config";
 import { ApiAuth, ApiError, ReactMiddleware, RouterCache } from "./Middlewares";
 import Api from "./Api";
 
+@Service()
 class App {
   express: Express;
-  config: Config;
-
-  constructor(config: Config) {
+  constructor(
+    private readonly config: Config,
+    private readonly api: Api,
+  ) {
     this.express = express();
-    this.config = config;
     this.initMiddlewares();
     this.initRoutes();
   }
 
-  initMiddlewares() {
+  private initMiddlewares() {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(cookieParser());
@@ -30,8 +32,8 @@ class App {
     }
   }
 
-  initRoutes() {
-    this.express.use("/api", Api.router);
+  private initRoutes() {
+    this.express.use("/api", this.api.router);
     this.express.use(ApiError);
     this.express.get("*", ApiAuth(false), (req, res) => {
       res.send(ReactMiddleware.getHtml(req));
@@ -39,6 +41,4 @@ class App {
   }
 }
 
-export default new App(
-  AppConfig,
-);
+export default App;

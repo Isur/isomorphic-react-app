@@ -1,9 +1,3 @@
-export interface Config {
-  environment: Environment,
-  cookies: Cookies,
-  containers: Containers,
-}
-
 export interface Environment {
   port: string,
   env: EnvironmentType,
@@ -18,6 +12,4 @@ export interface Cookies {
 
 export type EnvironmentType = "development" | "production" | "dockerized";
 
-export interface Containers {
-
-}
+export interface Apps { }

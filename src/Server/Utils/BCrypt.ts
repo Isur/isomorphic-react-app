@@ -1,7 +1,8 @@
 import { genSalt, hash, compare } from "bcryptjs";
-import { Crypto } from "./crypto.interface";
+import { Service } from "typedi";
 
-class BCrypt implements Crypto {
+@Service()
+class BCrypt {
   private generateSalt = (rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
       return genSalt(rounds, (error, salt) => {
@@ -32,4 +33,4 @@ class BCrypt implements Crypto {
   }
 }
 
-export default new BCrypt();
+export default BCrypt;

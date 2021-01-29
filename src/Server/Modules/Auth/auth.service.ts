@@ -1,25 +1,30 @@
-import { PrismaClient } from "@prisma/client";
+import { Inject, Service } from "typedi";
 import { HTTPError } from "../../Utils/HTTPError";
-import { JWT, JwtHelper, Crypto, BCrypt } from "../../Utils";
-import Database from "../../Utils/Database";
-import { Users, UsersService } from "../Users";
-import { Session, SessionService } from "../Sessions";
-import { AuthService } from "./auth.service.interface";
+import { JWT, BCrypt, Database } from "../../Utils";
+import { UsersService } from "../Users";
+import { SessionService } from "../Sessions";
 import { Register } from "./interfaces/register.interface";
 import { LoginResponse } from "./interfaces/login.interface";
 
-class Auth implements AuthService {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(
-    private readonly _jwt: JwtHelper,
-    private readonly _db: PrismaClient,
-    private readonly _userService: UsersService,
-    private readonly _sessionService: SessionService,
-    private readonly _bcrypt: Crypto,
-  ) { }
+@Service()
+class Auth {
+  @Inject()
+  private readonly _jwt: JWT;
 
-  login = async (username: string, password: string): Promise<LoginResponse> => {
-    const user = await this._db.user.findFirst({ where: { OR: [{ username }, { email: username }] } });
+  @Inject()
+  private readonly _db: Database;
+
+  @Inject()
+  private readonly _userService: UsersService;
+
+  @Inject()
+  private readonly _sessionService: SessionService;
+
+  @Inject()
+  private readonly _bcrypt: BCrypt;
+
+  public login = async (username: string, password: string): Promise<LoginResponse> => {
+    const user = await this._db.client.user.findFirst({ where: { OR: [{ username }, { email: username }] } });
     if(!user) throw new HTTPError(401, "Bad login and/or password");
     if(await this._bcrypt.compareHash(password, user.password) === false) throw new HTTPError(401, "Bad login and/or password");
     const sessionId = await this._sessionService.createSession(user.id);
@@ -27,7 +32,7 @@ class Auth implements AuthService {
     return { token, userId: user.id };
   }
 
-  register = async (userData: Register): Promise<string> => {
+  public register = async (userData: Register): Promise<string> => {
     if(userData.password !== userData.confirmPassword) throw new HTTPError(401, "Passwords mismatch");
     const emailTaken = await this._userService.findUser({ field: "email", value: userData.email });
     const usernameTaken = await this._userService.findUser({ field: "username", value: userData.username });
@@ -38,11 +43,9 @@ class Auth implements AuthService {
     return id;
   }
 
-  logout = async (sessionId: string) => {
+  public logout = async (sessionId: string) => {
     await this._sessionService.endSession(sessionId);
   }
 }
 
-export default new Auth(
-  JWT, Database.client, Users, Session, BCrypt,
-);
+export default Auth;

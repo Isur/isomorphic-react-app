@@ -1,17 +1,18 @@
-import { PrismaClient } from "@prisma/client";
+import { Inject, Service } from "typedi";
 import { SessionObject } from "../../../Common/Interfaces/session.interface";
-import { AppConfig, Config } from "../../Config";
+import { Config } from "../../Config";
 import { Database } from "../../Utils";
-import { SessionService } from "./session.service.interface";
 
-class Session implements SessionService {
-  constructor(
-    private readonly _db: PrismaClient,
-    private readonly _config: Config,
-  ) {}
+@Service()
+class SessionService {
+  @Inject()
+  private readonly _config: Config;
 
-  createSession = async (userId: string): Promise<string> => {
-    const session = await this._db.session.create({
+  @Inject()
+  private readonly _db: Database;
+
+  public createSession = async (userId: string): Promise<string> => {
+    const session = await this._db.client.session.create({
       data: {
         user: {
           connect: {
@@ -25,12 +26,12 @@ class Session implements SessionService {
     return session.id;
   }
 
-  endSession = async (sessionId: string): Promise<void> => {
-    await this._db.session.delete({ where: { id: sessionId } });
+  public endSession = async (sessionId: string): Promise<void> => {
+    await this._db.client.session.delete({ where: { id: sessionId } });
   }
 
-  getSession = async (sessionId: string): Promise<SessionObject> => {
-    const session = await this._db.session.findFirst({ where: { id: sessionId } });
+  public getSession = async (sessionId: string): Promise<SessionObject> => {
+    const session = await this._db.client.session.findFirst({ where: { id: sessionId } });
     return {
       sessionId: session.id,
       userId: session.userId,
@@ -39,6 +40,4 @@ class Session implements SessionService {
   }
 }
 
-export default new Session(
-  Database.client, AppConfig,
-);
+export default SessionService;

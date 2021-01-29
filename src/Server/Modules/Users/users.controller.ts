@@ -1,28 +1,28 @@
 import { Request, Response } from "express";
-import BaseController, { Routable } from "../BaseController";
+import { Inject, Service } from "typedi";
+import BaseController from "../BaseController";
 import { ApiAuth } from "../../Middlewares";
 import { MeResponseDto } from "../../../Common/ApiDto/users.dto";
-import { UsersService } from "./users.service.interface";
-import Users from "./users.service";
+import UsersService from "./users.service";
 
-class UsersController extends BaseController implements Routable {
-  constructor(
-    private readonly _usersService: UsersService,
-  ) {
+@Service()
+class UsersController extends BaseController {
+  @Inject()
+  private readonly _usersService: UsersService;
+
+  constructor() {
     super();
     this._initRoutes();
   }
 
-  _initRoutes = () => {
+  protected _initRoutes = () => {
     this.router.get("/me", ApiAuth(true), this.getMe);
   }
 
-  getMe = async (req: Request, res: Response<MeResponseDto>) => {
+  public getMe = async (req: Request, res: Response<MeResponseDto>) => {
     const user = await this._usersService.findUser({ field: "id", value: req.session.userid });
     res.json(user);
   }
 }
 
-export default new UsersController(
-  Users,
-);
+export default UsersController;

@@ -1,8 +1,9 @@
+import { Service } from "typedi";
 import { SettingsObject } from "../../../Common/Interfaces/settings.inteface";
-import { SettingsService } from "./settings.service.interface";
 
-class Settings implements SettingsService {
-  getSettings = async (): Promise<SettingsObject> => {
+@Service()
+class SettingsService {
+  public getSettings = async (): Promise<SettingsObject> => {
     return {
       appName: "Boilerplate",
       version: "1.0.0",
@@ -10,4 +11,4 @@ class Settings implements SettingsService {
   }
 }
 
-export default new Settings();
+export default SettingsService;
