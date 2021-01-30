@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Inject } from "typedi";
 import { SessionService } from "../Modules/Sessions";
-import { HTTPError } from "../Utils";
+import HTTPErrors from "../HttpErrors";
 import JWT from "../Utils/JWT";
 import { MiddlewareFunction } from "./Middleware.interface";
 
@@ -17,14 +17,14 @@ class Authenticate implements MiddlewareFunction {
 
     try {
       const decoded = this._jwt.tokenVerify(token);
-      if(!decoded) throw new HTTPError(403, "Unauthorized");
+      if(!decoded) throw new HTTPErrors.Unauthorized();
       const session = await this._sessionService.getSession(decoded.sessionid);
       req.session = {
         userid: session.userId,
         id: session.sessionId,
       };
     } catch(error) {
-      if(required) throw new HTTPError(403, "Unauthorized");
+      if(required) throw new HTTPErrors.Unauthorized();
       else {
         req.session = {
           userid: null,

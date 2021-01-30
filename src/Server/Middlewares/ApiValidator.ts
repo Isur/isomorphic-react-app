@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidationChain, validationResult } from "express-validator";
-import { HTTPError } from "../Utils/HTTPError";
+import HttpErrors from "../HttpErrors";
 import { MiddlewareFunction } from "./Middleware.interface";
 
 class ApiValidator implements MiddlewareFunction {
@@ -16,7 +16,7 @@ class ApiValidator implements MiddlewareFunction {
       return next();
     }
 
-    throw new HTTPError(400, errorMessage);
+    throw new HttpErrors.BadRequest(errorMessage);
   }
 }
 

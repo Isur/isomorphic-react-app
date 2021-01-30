@@ -1,5 +1,5 @@
 import { Inject, Service } from "typedi";
-import { HTTPError } from "../../Utils/HTTPError";
+import HTTPErrors from "../../HttpErrors";
 import { JWT, BCrypt, Database } from "../../Utils";
 import { UsersService } from "../Users";
 import { SessionService } from "../Sessions";
@@ -25,18 +25,18 @@ class Auth {
 
   public login = async (username: string, password: string): Promise<LoginResponse> => {
     const user = await this._db.client.user.findFirst({ where: { OR: [{ username }, { email: username }] } });
-    if(!user) throw new HTTPError(401, "Bad login and/or password");
-    if(await this._bcrypt.compareHash(password, user.password) === false) throw new HTTPError(401, "Bad login and/or password");
+    if(!user) throw new HTTPErrors.Unauthorized("Bad login and/or password");
+    if(await this._bcrypt.compareHash(password, user.password) === false) throw new HTTPErrors.Unauthorized("Bad login and/or password");
     const sessionId = await this._sessionService.createSession(user.id);
     const token = this._jwt.generateAuthToken(user.id, sessionId);
     return { token, userId: user.id };
   }
 
   public register = async (userData: Register): Promise<string> => {
-    if(userData.password !== userData.confirmPassword) throw new HTTPError(401, "Passwords mismatch");
+    if(userData.password !== userData.confirmPassword) throw new HTTPErrors.Unauthorized("Passwords mismatch");
     const emailTaken = await this._userService.findUser({ field: "email", value: userData.email });
     const usernameTaken = await this._userService.findUser({ field: "username", value: userData.username });
-    if(emailTaken || usernameTaken) throw new HTTPError(401, "User already exists");
+    if(emailTaken || usernameTaken) throw new HTTPErrors.Unauthorized("User already exists");
 
     const id = await this._userService.createUser({ ...userData });
 
