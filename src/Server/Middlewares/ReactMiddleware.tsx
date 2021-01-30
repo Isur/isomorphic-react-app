@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Service } from "typedi";
 import { Request } from "express";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
@@ -10,6 +11,7 @@ import App from "../../Common/App";
 import html from "../View/html";
 import { AppState, Store } from "../../Common/Redux/store";
 
+@Service()
 class ReactMiddleware {
   getHtml = (req: Request): string => {
     const context = {};
@@ -41,4 +43,4 @@ class ReactMiddleware {
   }
 }
 
-export default new ReactMiddleware();
+export default ReactMiddleware;

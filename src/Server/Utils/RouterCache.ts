@@ -1,11 +1,12 @@
 import webpack from "webpack";
+import { Service } from "typedi";
 import whm from "webpack-hot-middleware";
 import wdm from "webpack-dev-middleware";
 import express, { Router } from "express";
 import webpackClientDevConfig from "../../../webpack/client.dev.babel";
+import { Logger } from ".";
 
-// TODO: add custom logger
-
+@Service()
 class RouterCache {
   cached: Router;
   constructor() {
@@ -16,8 +17,7 @@ class RouterCache {
     if(this.cached) return this.cached;
     const router = this.cached = express.Router();
 
-    // eslint-disable-next-line no-console
-    console.log(`\nWebpack Hot Middleware has been enabled!`);
+    Logger.Log(`\nWebpack Hot Middleware has been enabled!`);
     const compiler = webpack(webpackClientDevConfig as webpack.Configuration);
 
     router.use(wdm(compiler, {
@@ -27,7 +27,7 @@ class RouterCache {
     }));
 
     router.use(whm(compiler, {
-      log: console.log, // eslint-disable-line no-console
+      log: Logger.Log,
       path: "/__webpack_hmr",
       heartbeat: 10 * 1000,
     }));
@@ -36,4 +36,4 @@ class RouterCache {
   }
 }
 
-export default new RouterCache();
+export default RouterCache;
