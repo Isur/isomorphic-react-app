@@ -1,4 +1,5 @@
 import { Service } from "typedi";
+import { TIME } from "../Constants";
 import { Apps, Cookies, Environment, EnvironmentType } from "./config.interface";
 
 @Service()
@@ -14,9 +15,9 @@ class Config {
 
   private loadFromEnv() {
     this.environment = {
-      env: process.env.NODE_ENV as EnvironmentType,
-      port: process.env.PORT,
-      secret: process.env.SECRET,
+      env: process.env.NODE_ENV as EnvironmentType || "development",
+      port: process.env.PORT || "3000",
+      secret: process.env.SECRET || "Some default secret that should be changed.",
     };
     this.apps = {
 
@@ -24,12 +25,10 @@ class Config {
   }
 
   private config = () => {
-    const HOUR = 1000 * 60 * 60; // TODO: to constants
-
     this.cookies = {
       expiration: "10h",
       httpOnly: true,
-      maxAge: HOUR * 10,
+      maxAge: TIME.HOUR * 10,
     };
   }
 }
