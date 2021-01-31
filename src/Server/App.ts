@@ -1,44 +1,47 @@
 import express, { Express } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import { Service } from "typedi";
 import "./Utils/Database";
-import { AppConfig, Config } from "./Config";
-import { ApiAuth, ApiError, ReactMiddleware, RouterCache } from "./Middlewares";
+import { RouterCache } from "./Utils";
+import { Config } from "./Config";
+import { ApiAuth, ApiError, ReactMiddleware } from "./Middlewares";
 import Api from "./Api";
 
+@Service()
 class App {
-  express: Express;
-  config: Config;
-
-  constructor(config: Config) {
+  public express: Express;
+  public constructor(
+    private readonly config: Config,
+    private readonly api: Api,
+    private readonly routerCache: RouterCache,
+    private readonly react: ReactMiddleware,
+  ) {
     this.express = express();
-    this.config = config;
-    this.initMiddlewares();
-    this.initRoutes();
+    this._initMiddlewares();
+    this._initRoutes();
   }
 
-  initMiddlewares() {
+  private _initMiddlewares() {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(cookieParser());
     this.express.use("/public", express.static("public"));
     if(this.config.environment.env === "development") {
-      this.express.use(RouterCache.mount());
+      this.express.use(this.routerCache.mount());
     } else {
       this.express.use("/client.js", express.static("client.js"));
       this.express.use("/style.css", express.static("style.css"));
     }
   }
 
-  initRoutes() {
-    this.express.use("/api", Api.router);
+  private _initRoutes() {
+    this.express.use("/api", this.api.router);
     this.express.use(ApiError);
     this.express.get("*", ApiAuth(false), (req, res) => {
-      res.send(ReactMiddleware.getHtml(req));
+      res.send(this.react.getHtml(req));
     });
   }
 }
 
-export default new App(
-  AppConfig,
-);
+export default App;

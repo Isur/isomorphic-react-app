@@ -1,36 +1,28 @@
-import { PrismaClient } from "@prisma/client";
+import { Inject, Service } from "typedi";
 import { SessionObject } from "../../../Common/Interfaces/session.interface";
-import { AppConfig, Config } from "../../Config";
-import { Database } from "../../Utils";
-import { SessionService } from "./session.service.interface";
+import { Config } from "../../Config";
+import SessionRepository from "./session.repository";
 
-class Session implements SessionService {
-  constructor(
-    private readonly _db: PrismaClient,
-    private readonly _config: Config,
-  ) {}
+@Service()
+class SessionService {
+  @Inject()
+  private readonly _config: Config;
 
-  createSession = async (userId: string): Promise<string> => {
-    const session = await this._db.session.create({
-      data: {
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
-        expiryTime: new Date(Date.now() + this._config.cookies.maxAge),
-      },
-    });
+  @Inject()
+  private readonly _sessionRepository: SessionRepository;
 
+  public createSession = async (userId: string): Promise<string> => {
+    const expiry = new Date(Date.now() + this._config.cookies.maxAge);
+    const session = await this._sessionRepository.createSession(userId, expiry);
     return session.id;
   }
 
-  endSession = async (sessionId: string): Promise<void> => {
-    await this._db.session.delete({ where: { id: sessionId } });
+  public endSession = async (sessionId: string): Promise<void> => {
+    await this._sessionRepository.deleteSession(sessionId);
   }
 
-  getSession = async (sessionId: string): Promise<SessionObject> => {
-    const session = await this._db.session.findFirst({ where: { id: sessionId } });
+  public getSession = async (sessionId: string): Promise<SessionObject> => {
+    const session = await this._sessionRepository.findSession(sessionId);
     return {
       sessionId: session.id,
       userId: session.userId,
@@ -39,6 +31,4 @@ class Session implements SessionService {
   }
 }
 
-export default new Session(
-  Database.client, AppConfig,
-);
+export default SessionService;

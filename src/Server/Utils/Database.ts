@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import { Service } from "typedi";
 
+@Service()
 class Prisma {
-  client: PrismaClient;
-  constructor() {
+  public client: PrismaClient;
+  public constructor() {
     this.client = new PrismaClient();
   }
 }
 
-export default new Prisma();
+export default Prisma;

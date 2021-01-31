@@ -1,28 +1,31 @@
 import { NextFunction, Request, Response } from "express";
-import { SessionService, Session } from "../Modules/Sessions";
-import { HTTPError } from "../Utils";
-import JWT, { JwtHelper } from "../Utils/JWT";
+import Container from "typedi";
+import { SessionService } from "../Modules/Sessions";
+import HTTPErrors from "../HttpErrors";
+import JWT from "../Utils/JWT";
 import { MiddlewareFunction } from "./Middleware.interface";
 
 class Authenticate implements MiddlewareFunction {
-  constructor(
-    private readonly _jwt: JwtHelper,
-    private readonly _sessionService: SessionService,
-  ) {  }
+  private readonly _jwt: JWT;
+  private readonly _sessionService: SessionService;
+  public constructor() {
+    this._jwt = Container.get(JWT);
+    this._sessionService = Container.get(SessionService);
+  }
 
-  execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
-    const token = this.getToken(req);
+  public execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    const token = this._getToken(req);
 
     try {
       const decoded = this._jwt.tokenVerify(token);
-      if(!decoded) throw new HTTPError(403, "Unauthorized");
+      if(!decoded) throw new HTTPErrors.Unauthorized();
       const session = await this._sessionService.getSession(decoded.sessionid);
       req.session = {
         userid: session.userId,
         id: session.sessionId,
       };
     } catch(error) {
-      if(required) throw new HTTPError(403, "Unauthorized");
+      if(required) throw new HTTPErrors.Unauthorized();
       else {
         req.session = {
           userid: null,
@@ -34,7 +37,7 @@ class Authenticate implements MiddlewareFunction {
     }
   }
 
-  private getToken = (req: Request): string => {
+  private _getToken = (req: Request): string => {
     if(req.cookies.jwt) {
       return req.cookies.jwt;
     } else {
@@ -43,6 +46,4 @@ class Authenticate implements MiddlewareFunction {
   }
 }
 
-export default new Authenticate(
-  JWT, Session,
-).execute;
+export default new Authenticate().execute;

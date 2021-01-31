@@ -3,7 +3,8 @@ module.exports = {
     plugins: [
       '@typescript-eslint',
       'react',
-      'import'
+      'import',
+      "typescript"
     ],
     parserOptions:{
       ecmaFeatures: {
@@ -205,6 +206,8 @@ module.exports = {
       "prefer-spread": "warn",
       "prefer-template": "warn",
       "rest-spread-spacing": "warn",
+      "typescript/member-naming": ["warn", {"private": "^_"}],
+      "typescript/explicit-member-accessibility": "warn",
       "template-curly-spacing": "warn",
       "react/boolean-prop-naming": ["warn", { "rule": "^(is|has)[A-Z]([A-Za-z0-9]?)+" }],
       "react/no-access-state-in-setstate": "warn",

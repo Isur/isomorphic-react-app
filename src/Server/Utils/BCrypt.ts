@@ -1,8 +1,9 @@
 import { genSalt, hash, compare } from "bcryptjs";
-import { Crypto } from "./crypto.interface";
+import { Service } from "typedi";
 
-class BCrypt implements Crypto {
-  private generateSalt = (rounds = 10): Promise<string> => {
+@Service()
+class BCrypt {
+  private _generateSalt = (rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
       return genSalt(rounds, (error, salt) => {
         if(error) reject(error);
@@ -11,9 +12,9 @@ class BCrypt implements Crypto {
     });
   }
 
-  hashData = (data: string, rounds = 10): Promise<string> => {
+  public hashData = (data: string, rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
-      this.generateSalt(rounds).then(salt => {
+      this._generateSalt(rounds).then(salt => {
         return hash(data, salt, (error, hash) => {
           if(error) reject(error);
           resolve(hash);
@@ -22,7 +23,7 @@ class BCrypt implements Crypto {
     });
   }
 
-  compareHash = (data: string, hash: string): Promise<boolean> => {
+  public compareHash = (data: string, hash: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       return compare(data, hash, (error, response) => {
         if(error) reject(error);
@@ -32,4 +33,4 @@ class BCrypt implements Crypto {
   }
 }
 
-export default new BCrypt();
+export default BCrypt;
