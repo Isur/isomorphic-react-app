@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import HTTPErrors from "../../HttpErrors";
-import { JWT, BCrypt, Database } from "../../Utils";
+import { JWT, BCrypt } from "../../Utils";
 import { UsersService } from "../Users";
 import { SessionService } from "../Sessions";
 import { Register } from "./interfaces/register.interface";
@@ -12,9 +12,6 @@ class Auth {
   private readonly _jwt: JWT;
 
   @Inject()
-  private readonly _db: Database;
-
-  @Inject()
   private readonly _userService: UsersService;
 
   @Inject()
@@ -23,8 +20,8 @@ class Auth {
   @Inject()
   private readonly _bcrypt: BCrypt;
 
-  public login = async (username: string, password: string): Promise<LoginResponse> => {
-    const user = await this._db.client.user.findFirst({ where: { OR: [{ username }, { email: username }] } });
+  public login = async (login: string, password: string): Promise<LoginResponse> => {
+    const user = await this._userService.findUserWithPasswordByLogin(login);
     if(!user) throw new HTTPErrors.Unauthorized("Bad login and/or password");
     if(await this._bcrypt.compareHash(password, user.password) === false) throw new HTTPErrors.Unauthorized("Bad login and/or password");
     const sessionId = await this._sessionService.createSession(user.id);
