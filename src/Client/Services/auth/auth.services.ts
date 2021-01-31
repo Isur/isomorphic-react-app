@@ -12,7 +12,7 @@ class AuthService extends ApiService {
   }
 
   public async logout(): Promise<void> {
-    return await this.requestService.get(`logout`);
+    return await this.requestService.post(`logout`, {});
   }
 }
 

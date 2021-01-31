@@ -1,16 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import { Inject } from "typedi";
+import Container from "typedi";
 import { SessionService } from "../Modules/Sessions";
 import HTTPErrors from "../HttpErrors";
 import JWT from "../Utils/JWT";
 import { MiddlewareFunction } from "./Middleware.interface";
 
 class Authenticate implements MiddlewareFunction {
-  @Inject()
   private readonly _jwt: JWT;
-
-  @Inject()
   private readonly _sessionService: SessionService;
+  public constructor() {
+    this._jwt = Container.get(JWT);
+    this._sessionService = Container.get(SessionService);
+  }
 
   public execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
     const token = this._getToken(req);
