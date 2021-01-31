@@ -6,18 +6,18 @@ import { RequestService } from "./request.interface";
 type methods = "GET" | "POST" | "PATCH" | "DELETE";
 
 export class Request implements RequestService {
-  basePath: string;
-  constructor(basePath: string) {
-    this.basePath = basePath;
+  private _basePath: string;
+  public constructor(basePath: string) {
+    this._basePath = basePath;
   }
 
-  async request<Res, Req = null>(url: string, method: methods, data?: Req): Promise<Res> {
+  public async request<Res, Req = null>(url: string, method: methods, data?: Req): Promise<Res> {
     let res: Res;
     const access_token = new Cookies().get("access_token");
     try {
       const response = await axios({
         method,
-        url: `${this.basePath}/${url}`,
+        url: `${this._basePath}/${url}`,
         baseURL: config.backend,
         data,
         headers: { access_token },
@@ -38,19 +38,19 @@ export class Request implements RequestService {
     return res;
   }
 
-  async get<Res>(url: string): Promise<Res> {
+  public async get<Res>(url: string): Promise<Res> {
     return await this.request<Res>(url, "GET");
   }
 
-  async post<Res, Req>(url: string, data: Req): Promise<Res> {
+  public async post<Res, Req>(url: string, data: Req): Promise<Res> {
     return await this.request<Res, Req>(url, "POST", data);
   }
 
-  async patch<Res, Req>(url: string, data: Req): Promise<Res> {
+  public async patch<Res, Req>(url: string, data: Req): Promise<Res> {
     return await this.request<Res, Req>(url, "PATCH", data);
   }
 
-  async delete<Res>(url: string): Promise<Res> {
+  public async delete<Res>(url: string): Promise<Res> {
     return await this.request<Res>(url, "DELETE");
   }
 }

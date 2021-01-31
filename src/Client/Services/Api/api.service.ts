@@ -1,10 +1,10 @@
 import { RequestService } from "../Request/request.interface";
 import { Request } from "../Request/request.service";
 
-export class ApiService {
-  requestService: RequestService;
+export abstract class ApiService {
+  protected requestService: RequestService;
 
-  constructor(basePath: string) {
+  public constructor(basePath: string) {
     this.requestService = new Request(basePath);
   }
 }

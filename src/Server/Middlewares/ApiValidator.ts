@@ -4,7 +4,7 @@ import HttpErrors from "../HttpErrors";
 import { MiddlewareFunction } from "./Middleware.interface";
 
 class ApiValidator implements MiddlewareFunction {
-  execute = (validations: ValidationChain[]) => async (req: Request, res: Response, next: NextFunction) => {
+  public execute = (validations: ValidationChain[]) => async (req: Request, res: Response, next: NextFunction) => {
     await Promise.all(validations.map(validation => validation.run(req)));
     const errors = validationResult(req);
     let errorMessage = "";

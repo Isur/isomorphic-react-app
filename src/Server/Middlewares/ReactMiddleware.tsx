@@ -13,7 +13,7 @@ import { AppState, Store } from "../../Common/Redux/store";
 
 @Service()
 class ReactMiddleware {
-  getHtml = (req: Request): string => {
+  public getHtml = (req: Request): string => {
     const context = {};
     const initData: Partial<AppState> = {
       settings: {

@@ -15,7 +15,7 @@ class AuthController extends BaseController {
   @Inject()
   private readonly _authService: AuthService;
 
-  constructor() {
+  public constructor() {
     super();
     this._initRoutes();
   }

@@ -10,16 +10,16 @@ interface JwtToken {
 @Service()
 class JWT {
   @Inject()
-  private readonly config: Config;
+  private readonly _config: Config;
 
-  generateAuthToken = (userid: string, sessionId: string) => {
-    return jwt.sign({ userid, sessionId }, this.config.environment.secret, { expiresIn: this.config.cookies.expiration });
+  public generateAuthToken = (userid: string, sessionId: string) => {
+    return jwt.sign({ userid, sessionId }, this._config.environment.secret, { expiresIn: this._config.cookies.expiration });
   }
 
-  tokenVerify = (token: string) => {
-    return jwt.verify(token, this.config.environment.secret, (error: unknown, decoded: JwtToken) => {
+  public tokenVerify = (token: string) => {
+    return jwt.verify(token, this._config.environment.secret, (error: unknown, decoded: JwtToken) => {
       if(error) return undefined;
-      if(decoded === undefined || Date.now() - decoded.iat * 1000 > this.config.cookies.maxAge)  {
+      if(decoded === undefined || Date.now() - decoded.iat * 1000 > this._config.cookies.maxAge)  {
         return undefined;
       }
       return decoded;

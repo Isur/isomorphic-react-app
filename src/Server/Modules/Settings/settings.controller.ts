@@ -9,7 +9,7 @@ class SettingsController extends BaseController {
   @Inject()
   private readonly _settingsService: SettingsService;
 
-  constructor() {
+  public constructor() {
     super();
     this._initRoutes();
   }

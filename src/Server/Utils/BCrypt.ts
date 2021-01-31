@@ -3,7 +3,7 @@ import { Service } from "typedi";
 
 @Service()
 class BCrypt {
-  private generateSalt = (rounds = 10): Promise<string> => {
+  private _generateSalt = (rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
       return genSalt(rounds, (error, salt) => {
         if(error) reject(error);
@@ -12,9 +12,9 @@ class BCrypt {
     });
   }
 
-  hashData = (data: string, rounds = 10): Promise<string> => {
+  public hashData = (data: string, rounds = 10): Promise<string> => {
     return new Promise((resolve, reject) => {
-      this.generateSalt(rounds).then(salt => {
+      this._generateSalt(rounds).then(salt => {
         return hash(data, salt, (error, hash) => {
           if(error) reject(error);
           resolve(hash);
@@ -23,7 +23,7 @@ class BCrypt {
     });
   }
 
-  compareHash = (data: string, hash: string): Promise<boolean> => {
+  public compareHash = (data: string, hash: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       return compare(data, hash, (error, response) => {
         if(error) reject(error);

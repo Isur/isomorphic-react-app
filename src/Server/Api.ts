@@ -6,14 +6,14 @@ import { AuthModule, SettingsModule, UsersModule } from "./Modules";
 
 @Service()
 class Api {
-  router: Router;
+  public router: Router;
 
-  constructor() {
+  public constructor() {
     this.router = PromiseRouter();
-    this.initRoutes();
+    this._initRoutes();
   }
 
-  private initRoutes = () => {
+  private _initRoutes = () => {
     this.router.use(ApiLogger);
     this.router.use("/auth", Container.get(AuthModule.AuthController).router);
     this.router.use("/users", Container.get(UsersModule.UsersController).router);

@@ -10,7 +10,7 @@ class UsersController extends BaseController {
   @Inject()
   private readonly _usersService: UsersService;
 
-  constructor() {
+  public constructor() {
     super();
     this._initRoutes();
   }

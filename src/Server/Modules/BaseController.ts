@@ -4,7 +4,7 @@ import PromiseRouter from "express-promise-router";
 abstract class BaseController {
   public router: Router;
   protected abstract _initRoutes: () => void;
-  constructor() {
+  public constructor() {
     this.router = PromiseRouter();
   }
 }

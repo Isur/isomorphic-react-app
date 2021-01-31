@@ -9,14 +9,14 @@ import UsersRepository from "./users.repository";
 @Service()
 class UsersService {
   @Inject()
-  private readonly usersRepository: UsersRepository;
+  private readonly _usersRepository: UsersRepository;
 
   @Inject()
   private readonly _brycpt: BCrypt;
 
   public createUser = async (userData: CreateUser): Promise<string> => {
     const hash = await this._brycpt.hashData(userData.password);
-    const u = await this.usersRepository.createUser({
+    const u = await this._usersRepository.createUser({
       ...userData, password: hash,
     });
 
@@ -24,20 +24,20 @@ class UsersService {
   }
 
   public findUser = async (search: SearchUser): Promise<UserObject> => {
-    const user = await this.usersRepository.findUser(search);
+    const user = await this._usersRepository.findUser(search);
 
     if(!user) return null;
 
-    return this.userToUserObject(user);
+    return this._userToUserObject(user);
   }
 
   public findUserWithPasswordByLogin = async (login: string): Promise<User> => {
-    const user = await this.usersRepository.findToLogin(login);
+    const user = await this._usersRepository.findToLogin(login);
     if(!user) return null;
     return user;
   }
 
-  private userToUserObject = (user: User): UserObject => {
+  private _userToUserObject = (user: User): UserObject => {
     return {
       createdDate: user.createdDate,
       email: user.email,

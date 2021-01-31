@@ -4,10 +4,10 @@ import http from "http";
 export type ErrorMessage = any;
 
 export abstract class HTTPError extends Error {
-  code: number;
-  message: string | undefined;
+  public code: number;
+  public message: string | undefined;
 
-  constructor(code: number, message?: ErrorMessage) {
+  public constructor(code: number, message?: ErrorMessage) {
     const errorMessage = message || http.STATUS_CODES[code];
     super(errorMessage);
     this.code = code;

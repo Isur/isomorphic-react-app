@@ -8,14 +8,14 @@ import { Logger } from ".";
 
 @Service()
 class RouterCache {
-  cached: Router;
-  constructor() {
-    this.cached = null;
+  private _cached: Router;
+  public constructor() {
+    this._cached = null;
   }
 
-  mount = () => {
-    if(this.cached) return this.cached;
-    const router = this.cached = express.Router();
+  public mount = () => {
+    if(this._cached) return this._cached;
+    const router = this._cached = express.Router();
 
     Logger.Log(`\nWebpack Hot Middleware has been enabled!`);
     const compiler = webpack(webpackClientDevConfig as webpack.Configuration);

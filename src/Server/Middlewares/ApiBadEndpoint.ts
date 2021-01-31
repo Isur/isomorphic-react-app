@@ -3,7 +3,7 @@ import HTTPErrors from "../HttpErrors";
 import { Middleware } from "./Middleware.interface";
 
 class ApiBadEndpoint implements Middleware {
-  execute = (req: Request, res: Response, next: NextFunction) => {
+  public execute = (req: Request, res: Response, next: NextFunction) => {
     next(new HTTPErrors.NotFound(`No endpoint: ${req.method} ${req.path}`));
   }
 }

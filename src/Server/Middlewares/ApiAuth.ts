@@ -12,8 +12,8 @@ class Authenticate implements MiddlewareFunction {
   @Inject()
   private readonly _sessionService: SessionService;
 
-  execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
-    const token = this.getToken(req);
+  public execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    const token = this._getToken(req);
 
     try {
       const decoded = this._jwt.tokenVerify(token);
@@ -36,7 +36,7 @@ class Authenticate implements MiddlewareFunction {
     }
   }
 
-  private getToken = (req: Request): string => {
+  private _getToken = (req: Request): string => {
     if(req.cookies.jwt) {
       return req.cookies.jwt;
     } else {

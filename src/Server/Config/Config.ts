@@ -4,16 +4,16 @@ import { Apps, Cookies, Environment, EnvironmentType } from "./config.interface"
 
 @Service()
 class Config {
-  environment: Environment;
-  cookies: Cookies;
-  apps: Apps;
+  public environment: Environment;
+  public cookies: Cookies;
+  public apps: Apps;
 
-  constructor() {
-    this.loadFromEnv();
-    this.config();
+  public constructor() {
+    this._loadFromEnv();
+    this._config();
   }
 
-  private loadFromEnv() {
+  private _loadFromEnv() {
     this.environment = {
       env: process.env.NODE_ENV as EnvironmentType || "development",
       port: process.env.PORT || "3000",
@@ -24,7 +24,7 @@ class Config {
     };
   }
 
-  private config = () => {
+  private _config = () => {
     this.cookies = {
       expiration: "10h",
       httpOnly: true,

@@ -10,19 +10,19 @@ import Api from "./Api";
 
 @Service()
 class App {
-  express: Express;
-  constructor(
+  public express: Express;
+  public constructor(
     private readonly config: Config,
     private readonly api: Api,
     private readonly routerCache: RouterCache,
     private readonly react: ReactMiddleware,
   ) {
     this.express = express();
-    this.initMiddlewares();
-    this.initRoutes();
+    this._initMiddlewares();
+    this._initRoutes();
   }
 
-  private initMiddlewares() {
+  private _initMiddlewares() {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(cookieParser());
@@ -35,7 +35,7 @@ class App {
     }
   }
 
-  private initRoutes() {
+  private _initRoutes() {
     this.express.use("/api", this.api.router);
     this.express.use(ApiError);
     this.express.get("*", ApiAuth(false), (req, res) => {
