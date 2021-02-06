@@ -1,5 +1,6 @@
 import { push } from "connected-react-router";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input } from "../../../Components";
 import { login as Login } from "../../../../Common/Redux/Auth";
@@ -10,10 +11,11 @@ const LoginContainer = () => {
   const userid = useSelector((state: AppState) => state.auth.userid);
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { t, i18n } = useTranslation("translation");
 
   useEffect(() => {
     if(userid) {
-      dispatch(push("/"));
+      dispatch(push(`/${_lang}/`));
     }
   }, [userid]);
 
@@ -30,12 +32,12 @@ const LoginContainer = () => {
   };
 
   const handleRegister = () => {
-    dispatch(push("/register"));
+    dispatch(push(`/${_lang}/register`));
   };
 
   return (
     <div>
-      <h1> LOGIN </h1>
+      <h1> {t("login")} </h1>
       <Input name="login" value={login} onChange={handleChangeLogin} label="Email" placeholder="Enter your email" />
       <Input name="password" value={password} onChange={handleChangePassword} type="password" label="Password" placeholder="Enter your password" />
       <Button onClick={handleLogin} content="Login" />

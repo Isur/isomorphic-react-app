@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { Request } from "express";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
@@ -10,11 +10,16 @@ import serializeJavascript from "serialize-javascript";
 import App from "../../Common/App";
 import html from "../View/html";
 import { AppState, Store } from "../../Common/Redux/store";
+import LanguageHelper from "../Utils/Language";
 
 @Service()
 class ReactMiddleware {
+  @Inject()
+  private readonly _langs: LanguageHelper;
+
   public getHtml = (req: Request): string => {
     const context = {};
+    const language = this._langs.getLanguage(req.lang);
     const initData: Partial<AppState> = {
       settings: {
         app: "Isomorphic React App",
@@ -39,7 +44,7 @@ class ReactMiddleware {
       </Provider>,
     );
 
-    return html(front, serializeJavascript(initData));
+    return html(front, serializeJavascript(initData), serializeJavascript(language));
   }
 }
 

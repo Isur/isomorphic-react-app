@@ -1,13 +1,27 @@
-/* eslint-disable @typescript-eslint/interface-name-prefix*/
-declare namespace Express {
-  export interface Request {
-    session: {
-      id: string,
-      userid: string,
-    },
+export {};
+
+declare global {
+  namespace Express {
+    interface Request {
+      session: {
+        id: string,
+        userid: string,
+      },
+      lang: string,
+    }
+
+    interface Response {
+
+    }
+  }
+  const _lang: string;
+  interface Window {
+    _lang: string,
   }
 
-  export interface Response {
-
+  namespace NodeJS {
+    interface Global {
+      _lang: string,
+    }
   }
 }

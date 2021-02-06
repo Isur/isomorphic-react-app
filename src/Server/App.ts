@@ -5,8 +5,9 @@ import { Service } from "typedi";
 import "./Utils/Database";
 import { RouterCache } from "./Utils";
 import { Config } from "./Config";
-import { ApiAuth, ApiError, ReactMiddleware } from "./Middlewares";
+import { ApiAuth, ApiError, ReactMiddleware, ApiLang } from "./Middlewares";
 import Api from "./Api";
+import { FOLDERS } from "./Constants";
 
 @Service()
 class App {
@@ -26,7 +27,7 @@ class App {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(cookieParser());
-    this.express.use("/public", express.static("public"));
+    this.express.use("/public", express.static(FOLDERS.PUBLIC));
     if(this.config.environment.env === "development") {
       this.express.use(this.routerCache.mount());
     } else {
@@ -38,6 +39,7 @@ class App {
   private _initRoutes() {
     this.express.use("/api", this.api.router);
     this.express.use(ApiError);
+    this.express.use(ApiLang);
     this.express.get("*", ApiAuth(false), (req, res) => {
       res.send(this.react.getHtml(req));
     });
