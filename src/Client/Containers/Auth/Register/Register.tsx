@@ -31,7 +31,7 @@ const RegisterContainer = () => {
   };
 
   const handleLogin = () => {
-    dispatcher(push("/login"));
+    dispatcher(push(`/${_lang}/login`));
   };
 
   return (

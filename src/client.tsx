@@ -12,11 +12,14 @@ const initData = document.getElementById("initData").textContent;
 const jsonData = JSON.parse(initData);
 const store = Store(history, jsonData);
 
+const locales = document.getElementById("locales").textContent;
+const lang = JSON.parse(locales);
+
 ReactDOM.hydrate(
   <CookiesProvider>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App />
+        <App langs={lang} server={false} />
       </ConnectedRouter>
     </Provider>
   </CookiesProvider>,

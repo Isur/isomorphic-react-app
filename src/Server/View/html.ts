@@ -1,4 +1,4 @@
-export default (app: string, initData: string): string => {
+export default (app: string, initData: string, language: unknown): string => {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -12,6 +12,7 @@ export default (app: string, initData: string): string => {
   <body>
     <div id="react-app">${app}</div>
     <script type="application/json" id="initData">${initData}</script>
+    <script type="application/json" id="locales">${language}</script>
     <script type="text/javascript" src="/client.js"></script>
   </body>
 </html>

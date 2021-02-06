@@ -1,1 +1,2 @@
-export { default as TIME } from "./time";
+export * as TIME from "./time";
+export * as FOLDERS from "./folders";
