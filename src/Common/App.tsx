@@ -8,14 +8,16 @@ import Homepage from "../Client/Pages/Homepage";
 import ErrorPage from "../Client/Pages/Error";
 import LoginPage from "../Client/Pages/Auth/LoginPage";
 import RegisterPage from "../Client/Pages/Auth/RegisterPage";
+import { init } from "../Client/localization";
 import { AppState } from "./Redux/store";
+import { Language } from "./Interfaces/Language.interface";
 import "../Client/Styles/global.scss";
 
-const App = () => {
+const App = ({ langs }: { langs: Language }) => {
   const pathname = useSelector((state: AppState) => state.router.location.pathname);
   const lang = pathname.split("/")[1];
   (isNode ? global : window)._lang = lang;
-
+  init(langs);
   return (
     <div className="App">
       <>

@@ -6,8 +6,11 @@ export const init = (lang: Language) => {
   i18n
     .use(initReactI18next)
     .init({
-      resources: lang,
-      debug: true,
+      resources: {
+        default: lang,
+      },
+      fallbackLng: "default",
+      debug: false,
       interpolation: {
         escapeValue: false,
       },

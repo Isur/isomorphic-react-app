@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Container from "typedi";
 import NotFound from "../HttpErrors/NotFound";
-import { Logger } from "../Utils";
 import LanguageHelper from "../Utils/Language";
 import { Middleware } from "./Middleware.interface";
 
@@ -13,7 +12,7 @@ class ApiLang implements Middleware {
 
   public execute = (req: Request, res: Response, next: NextFunction) => {
     const [_, lang, ...url] = req.url.split("/");
-    Logger.Log({ lang, url, req: req.url });
+
     if(lang === "public") throw new NotFound();
     if(lang !== "api") {
       const possibleLangs = this._langs.getLangKeys();

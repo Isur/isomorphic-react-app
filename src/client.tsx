@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { Store } from "./Common/Redux/store";
 import App from "./Common/App";
-import { init } from "./Client/localization";
 
 const history: History = createBrowserHistory();
 const initData = document.getElementById("initData").textContent;
@@ -15,13 +14,12 @@ const store = Store(history, jsonData);
 
 const locales = document.getElementById("locales").textContent;
 const lang = JSON.parse(locales);
-init(lang);
 
 ReactDOM.hydrate(
   <CookiesProvider>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App />
+        <App langs={lang} />
       </ConnectedRouter>
     </Provider>
   </CookiesProvider>,

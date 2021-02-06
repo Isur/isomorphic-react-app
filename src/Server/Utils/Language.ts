@@ -19,7 +19,8 @@ export default class LanguageHelper {
     const files = await DirHelper.GetFilenames(FOLDERS.LOCALES);
     for(let i = 0; i < files.length; i++) {
       const langName = files[i].split(".")[0];
-      const lang = await FileJson.read<Language>(`${FOLDERS.LOCALES}/${langName}.json`);
+      // eslint-disable-next-line
+      const lang = require(`../../../locales/${langName}.json`);
       this._language[langName] = lang;
     }
   }

@@ -39,7 +39,7 @@ class ReactMiddleware {
     const front = ReactDOMServer.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-          <App />
+          <App langs={language} />
         </StaticRouter>
       </Provider>,
     );
