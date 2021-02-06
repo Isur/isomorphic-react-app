@@ -1,3 +1,9 @@
 {
-  "login": "Zaloguj się"
+  "loginPage": {
+    "login": "Zaloguj się"
+  },
+  "common": {
+    "ok": "ok",
+    "help": "Pomoc"
+  }
 }

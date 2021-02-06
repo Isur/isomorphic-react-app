@@ -11,7 +11,7 @@ const LoginContainer = () => {
   const userid = useSelector((state: AppState) => state.auth.userid);
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { t, i18n } = useTranslation("translation");
+  const { t } = useTranslation(["loginPage", "common"]);
 
   useEffect(() => {
     if(userid) {
@@ -37,7 +37,7 @@ const LoginContainer = () => {
 
   return (
     <div>
-      <h1> {t("login")} </h1>
+      <h1> {t("login")} - {t("common:help")} </h1>
       <Input name="login" value={login} onChange={handleChangeLogin} label="Email" placeholder="Enter your email" />
       <Input name="password" value={password} onChange={handleChangePassword} type="password" label="Password" placeholder="Enter your password" />
       <Button onClick={handleLogin} content="Login" />

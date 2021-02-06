@@ -1,3 +1,5 @@
+import { Language } from "./src/Common/Interfaces/Language.interface";
+
 export {};
 
 declare global {
@@ -15,13 +17,16 @@ declare global {
     }
   }
   const _lang: string;
+  const _dict: Language;
   interface Window {
     _lang: string,
+    _dict: Language,
   }
 
   namespace NodeJS {
     interface Global {
       _lang: string,
+      _dict: Language,
     }
   }
 }
