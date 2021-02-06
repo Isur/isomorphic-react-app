@@ -1,5 +1,4 @@
 export interface Language {
-  [key: string]: {
-    [key: string]: unknown,
-  },
+  "_": "string",
+  [key: string]: unknown,
 }

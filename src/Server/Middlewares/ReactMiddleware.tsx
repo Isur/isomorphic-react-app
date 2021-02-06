@@ -35,15 +35,13 @@ class ReactMiddleware {
       initialEntries: [req.originalUrl],
     });
     const store = Store(history, initData);
-
     const front = ReactDOMServer.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-          <App langs={language} />
+          <App langs={language} server />
         </StaticRouter>
       </Provider>,
     );
-
     return html(front, serializeJavascript(initData), serializeJavascript(language));
   }
 }

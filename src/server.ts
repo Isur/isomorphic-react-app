@@ -19,15 +19,17 @@ server.listen(port);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const module: any; // without this line typescript doesn't know what module is
 if(module.hot) {
-  module.hot.accept("./Server/App", async () => {
-    let newApp = app.express;
-    if(originalApp === newApp) {
-      newApp = Container.get<App>((await import("./Server/App")).default).express;
-    }
-    server.removeListener("request", currentApp);
-    server.on("request", newApp);
-    currentApp = newApp;
-  });
+  module.hot.accept("./Server/App", reloadApp);
+}
+
+async function reloadApp() {
+  let newApp = app.express;
+  if(originalApp === newApp) {
+    newApp = Container.get<App>((await import("./Server/App")).default).express;
+  }
+  server.removeListener("request", currentApp);
+  server.on("request", newApp);
+  currentApp = newApp;
 }
 
 Logger.Log(`

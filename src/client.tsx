@@ -19,7 +19,7 @@ ReactDOM.hydrate(
   <CookiesProvider>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App langs={lang} />
+        <App langs={lang} server={false} />
       </ConnectedRouter>
     </Provider>
   </CookiesProvider>,

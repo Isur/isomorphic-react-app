@@ -13,11 +13,11 @@ import { AppState } from "./Redux/store";
 import { Language } from "./Interfaces/Language.interface";
 import "../Client/Styles/global.scss";
 
-const App = ({ langs }: { langs: Language }) => {
+const App = ({ langs, server }: { langs: Language, server: boolean }) => {
   const pathname = useSelector((state: AppState) => state.router.location.pathname);
   const lang = pathname.split("/")[1];
   (isNode ? global : window)._lang = lang;
-  init(langs);
+  init(langs, server);
   return (
     <div className="App">
       <>
