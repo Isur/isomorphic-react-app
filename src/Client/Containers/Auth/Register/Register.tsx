@@ -37,10 +37,10 @@ const RegisterContainer = () => {
   return (
     <div className="Auth">
       <h1> REGISTER </h1>
-      <Input name="email" value={state.email} onChange={handleChange} type="email" label="Email" placeholder="Enter your email address" error="error" />
+      {/* <Input name="email" value={state.email} onChange={handleChange} type="email" label="Email" placeholder="Enter your email address" error="error" />
       <Input name="username" value={state.username} onChange={handleChange} label="Username" placeholder="Enter your username" error="error" />
       <Input name="password" value={state.password} onChange={handleChange} type="password" label="Password" placeholder="Enter your password" error="error" />
-      <Input name="confirmPassword" value={state.confirmPassword} onChange={handleChange} type="password" label="Confirm Password" placeholder="Confirm your password" />
+      <Input name="confirmPassword" value={state.confirmPassword} onChange={handleChange} type="password" label="Confirm Password" placeholder="Confirm your password" /> */}
       <Button content="Register" onClick={handleSubmit} />
       <Button content="Login" onClick={handleLogin} />
     </div>

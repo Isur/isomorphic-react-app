@@ -1,9 +1,11 @@
 {
   "_": "en",
   "loginPage": {
-    "login": "Log In"
+    "login": "Log In",
+    "loginFailed": "Invalid Credentials"
   },
   "common": {
-    "ok": "ok"
+    "ok": "ok",
+    "fieldRequired": "Required!"
   }
 }
