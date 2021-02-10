@@ -2,6 +2,7 @@ export interface Environment {
   port: string,
   env: EnvironmentType,
   secret: string,
+  dbUrl: string,
 }
 
 export interface Cookies {
