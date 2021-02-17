@@ -1,27 +1,17 @@
 import React from "react";
 import { push } from "connected-react-router";
 import { useTranslation } from "react-i18next";
-import { useForm, FormProvider } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Input } from "../../../Components";
 import { login as Login } from "../../../../Common/Redux/Auth";
 import { AppState } from "../../../../Common/Redux/store";
-
-interface LoginForm {
-  login: string,
-  password: string,
-}
+import { Button, Input, Form } from "../../../Components";
+import { LoginForm, validationSchemas } from "./LoginForm";
+import "../Auth.scss";
 
 const LoginContainer = () => {
   const dispatch = useDispatch();
   const authError = useSelector((state: AppState) => state.auth.error);
-  const formMethods = useForm<LoginForm>();
-  const { handleSubmit } = formMethods;
   const { t } = useTranslation(["loginPage", "common"]);
-
-  const validationScheme = {
-    required: t("common:fieldRequired"),
-  };
 
   const handleLogin = async (data: LoginForm) => {
     dispatch(Login(data.login, data.password));
@@ -32,15 +22,15 @@ const LoginContainer = () => {
   };
 
   return (
-    <div>
+    <div className="Auth">
       <h1> {t("login")} - {t("common:help")} </h1>
-      <FormProvider {...formMethods}>
-        <Input name="login" label="Email" placeholder="Enter your email" validation={validationScheme} />
-        <Input name="password" type="password" label="Password" placeholder="Enter your password" validation={validationScheme} />
+      <Form<LoginForm> onSubmit={handleLogin} validation={validationSchemas()} translation="loginPage">
+        <Input name="login" />
+        <Input name="password" type="password" />
         <p> {authError && t("loginFailed")} </p>
-        <Button onClick={handleSubmit(handleLogin)} content="Login" />
+        <Button type="submit" content="Login" />
         <Button onClick={handleRegister} content="Register" />
-      </FormProvider>
+      </Form>
     </div>
   );
 };
