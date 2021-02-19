@@ -1,8 +1,8 @@
 import { Service } from "typedi";
 import { Language } from "../../Common/Interfaces/Language.interface";
+import "../../../locales/en.json"; // For development to hot reload on language chagnes, TODO: fix this in future to handle all lang files
 import { FOLDERS } from "../Constants";
 import DirHelper from "./Files/DirHelper";
-import FileJson from "./Files/FileJson";
 
 @Service()
 export default class LanguageHelper {

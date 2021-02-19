@@ -3,7 +3,7 @@ import { LoginContainer } from "../../Containers";
 
 const LoginPage = () => {
   return (
-    <div>
+    <div className="Page">
       <LoginContainer />
     </div>
   );
