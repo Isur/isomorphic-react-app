@@ -24,6 +24,7 @@
   },
   "common": {
     "ok": "ok",
-    "fieldRequired": "Required!"
+    "fieldRequired": "Required!",
+    "fieldFormatEmail": "It should be an email with @"
   }
 }

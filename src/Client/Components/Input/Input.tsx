@@ -3,7 +3,7 @@ import { InputProps } from "./Input.interface";
 import "./Input.scss";
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { label, validation, error, ...rest } = props;
+  const { label, error, ...rest } = props;
 
   return (
     <div className="Input">
