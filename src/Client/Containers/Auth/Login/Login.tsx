@@ -1,15 +1,17 @@
 import React from "react";
-import { push } from "connected-react-router";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { login as Login } from "../../../../Common/Redux/Auth";
 import { AppState } from "../../../../Common/Redux/store";
+import { FrontPaths } from "../../../../Common/Routes";
 import { Button, Input, Form } from "../../../Components";
+import useRedirect from "../../../Hooks/useRedirect";
 import { LoginForm, validationSchemas } from "./LoginForm";
 import "../Auth.scss";
 
 const LoginContainer = () => {
   const dispatch = useDispatch();
+  const redirect = useRedirect();
   const authError = useSelector((state: AppState) => state.auth.error);
   const { t } = useTranslation(["loginPage", "common"]);
 
@@ -18,7 +20,7 @@ const LoginContainer = () => {
   };
 
   const handleRegister = () => {
-    dispatch(push(`/${_lang}/register`));
+    redirect(FrontPaths.register);
   };
 
   return (
