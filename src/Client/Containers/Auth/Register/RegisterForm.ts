@@ -1,4 +1,4 @@
-import i18n from "../../../localization";
+import i18n from "@client/localization";
 
 export interface RegisterForm {
   email: string,

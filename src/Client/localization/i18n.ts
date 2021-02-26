@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { Language } from "../../Common/Interfaces/Language.interface";
+import { Language } from "@shared/Interfaces/Language.interface";
 
 export const init = (lang: Language, server: boolean) => {
   if(i18n.isInitialized && !server) {

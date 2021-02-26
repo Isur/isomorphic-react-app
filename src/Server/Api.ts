@@ -1,9 +1,9 @@
 import { Router } from "express";
 import PromiseRouter from "express-promise-router";
 import Container, { Service } from "typedi";
-import { BackendPaths } from "../Common/Routes";
 import { ApiBadEndpoint, ApiLogger } from "./Middlewares";
 import { AuthModule, SettingsModule, UsersModule } from "./Modules";
+import { BackendPaths } from "@shared/Routes";
 
 @Service()
 class Api {

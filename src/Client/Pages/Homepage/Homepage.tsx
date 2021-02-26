@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../Common/Redux/Auth";
-import { Button } from "../../Components";
+import { Button } from "@client/Components";
+import { logout } from "@shared/Redux/Auth";
 import "./Homepage.scss";
 
 const Homepage = () => {

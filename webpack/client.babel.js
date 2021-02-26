@@ -1,6 +1,8 @@
 import path from "path";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
+
 
 export default {
   target: "web",
@@ -56,5 +58,8 @@ export default {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".css", ".scss"],
+    plugins: [
+      new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })
+    ]
   },
 };

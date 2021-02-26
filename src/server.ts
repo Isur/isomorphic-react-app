@@ -2,9 +2,9 @@ import http from "http";
 import chalk from "chalk";
 import "reflect-metadata";
 import Container from "typedi";
-import App from "./Server/App";
-import { Config } from "./Server/Config";
-import { Logger } from "./Server/Utils";
+import App from "@server/App";
+import { Config } from "@server/Config";
+import { Logger } from "@server/Utils";
 
 const config = Container.get<Config>(Config);
 

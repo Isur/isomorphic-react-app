@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
-import { SettingsObject } from "../../../Common/Interfaces/settings.inteface";
 import BaseController from "../BaseController";
 import SettingsService from "./settings.service";
+import { SettingsObject } from "@shared/Interfaces/settings.inteface";
 
 @Service()
 class SettingsController extends BaseController {

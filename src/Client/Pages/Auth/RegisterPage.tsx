@@ -1,5 +1,5 @@
 import React from "react";
-import { RegisterContainer } from "../../Containers";
+import { RegisterContainer } from "@client/Containers";
 
 const RegisterPage = () => {
   return (

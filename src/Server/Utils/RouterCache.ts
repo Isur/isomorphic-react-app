@@ -3,8 +3,8 @@ import { Service } from "typedi";
 import whm from "webpack-hot-middleware";
 import wdm from "webpack-dev-middleware";
 import express, { Router } from "express";
-import webpackClientDevConfig from "../../../webpack/client.dev.babel";
 import { Logger } from ".";
+import webpackClientDevConfig from "@root/webpack/client.dev.babel.js";
 
 @Service()
 class RouterCache {

@@ -1,6 +1,6 @@
 import { ApiService } from "../Base/api.service";
-import { GetSettingsResponseDto } from "../../../Common/ApiDto/settings.dto";
-import { BackendPaths } from "../../../Common/Routes";
+import { GetSettingsResponseDto } from "@shared/ApiDto/settings.dto";
+import { BackendPaths } from "@shared/Routes";
 
 class SettingsService extends ApiService {
   public async getSettings(): Promise<GetSettingsResponseDto> {
@@ -8,4 +8,4 @@ class SettingsService extends ApiService {
   }
 }
 
-export default new SettingsService(BackendPaths.settings);
+export default new SettingsService("settings");

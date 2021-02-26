@@ -4,8 +4,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { createBrowserHistory, History } from "history";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
-import { Store } from "./Common/Redux/store";
-import App from "./Common/App";
+import { Store } from "@shared/Redux/store";
+import App from "@shared/App";
 
 const history: History = createBrowserHistory();
 const initData = document.getElementById("initData").textContent;

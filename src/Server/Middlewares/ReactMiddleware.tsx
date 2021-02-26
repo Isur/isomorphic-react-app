@@ -7,10 +7,10 @@ import { StaticRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createMemoryHistory } from "history";
 import serializeJavascript from "serialize-javascript";
-import App from "../../Common/App";
 import html from "../View/html";
-import { AppState, Store } from "../../Common/Redux/store";
 import LanguageHelper from "../Utils/Language";
+import App from "@shared/App";
+import { AppState, Store } from "@shared/Redux/store";
 
 @Service()
 class ReactMiddleware {
