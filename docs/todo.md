@@ -1,3 +1,8 @@
 - [ ] Register Form correct validation.
+- [ ] Typescript config -> @components, @services, etc.
 - [ ] Routing
-    - [ ] Better route list, improvement in automation
+    - [X] Front
+    - [ ] Backend
+        - [ ] DTOs
+        - [ ] Validator middleware
+

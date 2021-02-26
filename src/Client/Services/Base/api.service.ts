@@ -1,5 +1,5 @@
-import { RequestService } from "../Request/request.interface";
-import { Request } from "../Request/request.service";
+import { RequestService } from "./request.interface";
+import { Request } from "./request.service";
 
 export abstract class ApiService {
   protected requestService: RequestService;
