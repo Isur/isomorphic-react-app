@@ -1,14 +1,14 @@
-import { push } from "connected-react-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { Button, Input, Form } from "../../../Components";
 import { AuthService } from "../../../Services";
+import useRedirect from "../../../Hooks/useRedirect";
+import { FrontPaths } from "../../../../Common/Routes";
 import { RegisterForm, validationSchemas } from "./RegisterForm";
 import "../Auth.scss";
 
 const RegisterContainer = () => {
-  const dispatcher = useDispatch();
+  const redirect = useRedirect();
   const { t } = useTranslation(["registerPage", "common"]);
 
   const handleSubmit = async (data: RegisterForm) => {
@@ -16,7 +16,7 @@ const RegisterContainer = () => {
   };
 
   const handleLogin = () => {
-    dispatcher(push(`/${_lang}/login`));
+    redirect(FrontPaths.login);
   };
 
   return (

@@ -1,5 +1,6 @@
-import { ApiService } from "../Api/api.service";
+import { ApiService } from "../Base/api.service";
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from "../../../Common/ApiDto/auth.dto";
+import { BackendPaths } from "../../../Common/Routes";
 
 class AuthService extends ApiService {
   public async login(data: LoginRequestDto): Promise<LoginResponseDto> {
@@ -16,4 +17,4 @@ class AuthService extends ApiService {
   }
 }
 
-export default new AuthService("auth");
+export default new AuthService(BackendPaths.auth);
