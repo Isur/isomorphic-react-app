@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { SettingsObject } from "../../../Common/Interfaces/settings.inteface";
+import { SettingsObject } from "@shared/Interfaces/settings.inteface";
 
 @Service()
 class SettingsService {

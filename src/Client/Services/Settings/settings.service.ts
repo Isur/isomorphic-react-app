@@ -1,5 +1,6 @@
-import { ApiService } from "../Api/api.service";
-import { GetSettingsResponseDto } from "../../../Common/ApiDto/settings.dto";
+import { ApiService } from "../Base/api.service";
+import { GetSettingsResponseDto } from "@shared/ApiDto/settings.dto";
+import { API } from "@shared/Constants";
 
 class SettingsService extends ApiService {
   public async getSettings(): Promise<GetSettingsResponseDto> {
@@ -7,4 +8,4 @@ class SettingsService extends ApiService {
   }
 }
 
-export default new SettingsService("settings");
+export default new SettingsService(API.SETTINGS);

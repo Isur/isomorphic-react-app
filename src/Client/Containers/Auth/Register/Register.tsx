@@ -1,48 +1,35 @@
-import { push } from "connected-react-router";
-import React, { useReducer } from "react";
-import { useDispatch } from "react-redux";
-import { Button, Input } from "../../../Components";
-import { AuthService } from "../../../Services";
-import { RegisterActionPayload, RegisterState } from "./Register.interface";
-
-const initState: RegisterState = {
-  email: "",
-  username: "",
-  password: "",
-  confirmPassword: "",
-};
-
-const reducer = (state: RegisterState = initState, { field, value }: RegisterActionPayload) => ({
-  ...state,
-  [field]: value,
-});
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { RegisterForm, validationSchemas } from "./RegisterForm";
+import { Button, Input, Form } from "@client/Components";
+import { AuthService } from "@client/Services";
+import useRedirect from "@client/Hooks/useRedirect";
+import { PATHS } from "@shared/Constants";
+import "../Auth.scss";
 
 const RegisterContainer = () => {
-  const [state, dispatch] = useReducer(reducer, initState);
-  const dispatcher = useDispatch();
+  const redirect = useRedirect();
+  const { t } = useTranslation(["registerPage", "common"]);
 
-  const handleChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ field: event.target.name, value: event.target.value });
-  };
-
-  const handleSubmit = async () => {
-    // TODO:  validate input data.
-    const resp = await AuthService.register(state);
+  const handleSubmit = async (data: RegisterForm) => {
+    await AuthService.register(data);
   };
 
   const handleLogin = () => {
-    dispatcher(push(`/${_lang}/login`));
+    redirect(PATHS.LOGIN);
   };
 
   return (
     <div className="Auth">
-      <h1> REGISTER </h1>
-      <Input name="email" value={state.email} onChange={handleChange} type="email" label="Email" placeholder="Enter your email address" error="error" />
-      <Input name="username" value={state.username} onChange={handleChange} label="Username" placeholder="Enter your username" error="error" />
-      <Input name="password" value={state.password} onChange={handleChange} type="password" label="Password" placeholder="Enter your password" error="error" />
-      <Input name="confirmPassword" value={state.confirmPassword} onChange={handleChange} type="password" label="Confirm Password" placeholder="Confirm your password" />
-      <Button content="Register" onClick={handleSubmit} />
-      <Button content="Login" onClick={handleLogin} />
+      <h1> {t("register")} </h1>
+      <Form<RegisterForm> onSubmit={handleSubmit} validation={validationSchemas()} translation="registerPage">
+        <Input name="email" type="email" />
+        <Input name="username" />
+        <Input name="password" type="password" />
+        <Input name="confirmPassword" type="password" />
+        <Button content="Register" type="submit" />
+        <Button content="Login" onClick={handleLogin} />
+      </Form>
     </div>
   );
 };

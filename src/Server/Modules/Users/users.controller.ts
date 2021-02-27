@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
 import BaseController from "../BaseController";
 import { ApiAuth } from "../../Middlewares";
-import { MeResponseDto } from "../../../Common/ApiDto/users.dto";
 import UsersService from "./users.service";
+import { MeResponseDto } from "@shared/ApiDto/users.dto";
 
 @Service()
 class UsersController extends BaseController {

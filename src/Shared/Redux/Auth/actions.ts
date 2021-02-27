@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Cookies } from "react-cookie";
-import { AuthService } from "../../../Client/Services";
 import { AuthActionTypes, LOGOUT, LOGIN_FAILED, LOGIN_SUCCESS } from "./types";
+import { AuthService } from "@client/Services";
 
 export const login = (login: string, password: string) => async (dispatch: Dispatch<AuthActionTypes>) => {
   try {

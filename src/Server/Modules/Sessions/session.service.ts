@@ -1,7 +1,7 @@
 import { Inject, Service } from "typedi";
-import { SessionObject } from "../../../Common/Interfaces/session.interface";
 import { Config } from "../../Config";
 import SessionRepository from "./session.repository";
+import { SessionObject } from "@shared/Interfaces/session.interface";
 
 @Service()
 class SessionService {

@@ -1,6 +1,8 @@
 import path from "path";
 import nodeExternals from 'webpack-node-externals';
 import CopyWebpackPlugin from "copy-webpack-plugin";
+import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
+
 
 export default {
   target: "async-node",
@@ -20,7 +22,8 @@ export default {
       patterns: [
         { from: "./.env", to: "" },
         { from: "./prisma", to: "prisma/" },
-        { from: "./locales", to: "locales/" }
+        { from: "./locales", to: "locales/" },
+        { from: "./tsconfig.json", to: "tsconfig.json" }
       ]
     }),
   ],
@@ -54,5 +57,8 @@ export default {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
+    plugins: [
+      new TsconfigPathsPlugin()
+    ]
   },
 };

@@ -1,9 +1,9 @@
 import React from "react";
-import { LoginContainer } from "../../Containers";
+import { LoginContainer } from "@client/Containers";
 
 const LoginPage = () => {
   return (
-    <div>
+    <div className="Page">
       <LoginContainer />
     </div>
   );

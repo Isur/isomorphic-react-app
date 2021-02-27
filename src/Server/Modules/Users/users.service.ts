@@ -1,10 +1,10 @@
 import { User } from "@prisma/client";
 import { Inject, Service } from "typedi";
-import { UserObject } from "../../../Common/Interfaces/user.interface";
 import { BCrypt } from "../../Utils";
 import { CreateUser } from "./interfaces/createUser.interface";
 import { SearchUser } from "./interfaces/search.interface";
 import UsersRepository from "./users.repository";
+import { UserObject } from "@shared/Interfaces/user.interface";
 
 @Service()
 class UsersService {

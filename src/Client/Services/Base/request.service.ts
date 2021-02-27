@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import config from "../../config";
 import { RequestService } from "./request.interface";
+import config from "@client/config";
 
 type methods = "GET" | "POST" | "PATCH" | "DELETE";
 
