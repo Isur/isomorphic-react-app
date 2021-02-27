@@ -22,7 +22,8 @@ export default {
       patterns: [
         { from: "./.env", to: "" },
         { from: "./prisma", to: "prisma/" },
-        { from: "./locales", to: "locales/" }
+        { from: "./locales", to: "locales/" },
+        { from: "./tsconfig.json", to: "tsconfig.json" }
       ]
     }),
   ],
@@ -57,7 +58,7 @@ export default {
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
     plugins: [
-      new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })
+      new TsconfigPathsPlugin()
     ]
   },
 };
