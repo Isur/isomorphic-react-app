@@ -5,7 +5,7 @@ const useRedirect = () => {
   const dispatch = useDispatch();
 
   const redirect = (path: string) => {
-    dispatch(push(`/${_lang}${path}`));
+    dispatch(push(`/${_lang}/${path}`));
   };
 
   return redirect;

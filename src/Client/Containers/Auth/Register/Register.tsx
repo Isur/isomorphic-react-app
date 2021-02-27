@@ -4,7 +4,7 @@ import { RegisterForm, validationSchemas } from "./RegisterForm";
 import { Button, Input, Form } from "@client/Components";
 import { AuthService } from "@client/Services";
 import useRedirect from "@client/Hooks/useRedirect";
-import { FrontPaths } from "@shared/Routes";
+import { PATHS } from "@shared/Constants";
 import "../Auth.scss";
 
 const RegisterContainer = () => {
@@ -16,7 +16,7 @@ const RegisterContainer = () => {
   };
 
   const handleLogin = () => {
-    redirect(FrontPaths.login);
+    redirect(PATHS.LOGIN);
   };
 
   return (

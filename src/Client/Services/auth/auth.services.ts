@@ -1,7 +1,7 @@
 import { ApiService } from "../Base/api.service";
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, RegisterResponseDto } from "@shared/ApiDto/auth.dto";
-import { BackendPaths } from "@shared/Routes";
-console.log({ front: "asdasd", BackendPaths });
+import { API } from "@shared/Constants";
+
 class AuthService extends ApiService {
   public async login(data: LoginRequestDto): Promise<LoginResponseDto> {
     const { userId, access_token } = await this.requestService.post<LoginResponseDto, LoginRequestDto>(`login`, data);
@@ -17,4 +17,4 @@ class AuthService extends ApiService {
   }
 }
 
-export default new AuthService("auth");
+export default new AuthService(API.AUTH);

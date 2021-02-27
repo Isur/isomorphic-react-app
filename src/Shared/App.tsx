@@ -2,7 +2,7 @@ import React from "react";
 import { hot } from "react-hot-loader";
 import { useSelector } from "react-redux";
 import isNode from "detect-node";
-import { FrontRoutes } from "./Routes";
+import { FrontRoutes } from "./FrontRoutes";
 import { AppState } from "./Redux/store";
 import { Language } from "./Interfaces/Language.interface";
 import { init } from "@client/localization";

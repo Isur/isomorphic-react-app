@@ -6,7 +6,7 @@ import { useRedirect } from "@client/Hooks";
 import { Button, Input, Form } from "@client/Components";
 import { login as Login } from "@shared/Redux/Auth";
 import { AppState } from "@shared/Redux/store";
-import { FrontPaths } from "@shared/Routes";
+import { PATHS } from "@shared/Constants";
 import "../Auth.scss";
 
 const LoginContainer = () => {
@@ -20,7 +20,7 @@ const LoginContainer = () => {
   };
 
   const handleRegister = () => {
-    redirect(FrontPaths.register);
+    redirect(PATHS.REGISTER);
   };
 
   return (
