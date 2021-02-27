@@ -1,8 +1,8 @@
 import { Service } from "typedi";
-import { Language } from "../../Common/Interfaces/Language.interface";
-import "../../../locales/en.json"; // For development to hot reload on language chagnes, TODO: fix this in future to handle all lang files
+import "@root/locales/en.json"; // For development to hot reload on language chagnes, TODO: fix this in future to handle all lang files
 import { FOLDERS } from "../Constants";
 import DirHelper from "./Files/DirHelper";
+import { Language } from "@shared/Interfaces/Language.interface";
 
 @Service()
 export default class LanguageHelper {

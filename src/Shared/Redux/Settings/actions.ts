@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import settingsService from "../../../Client/Services/Settings/settings.service";
 import { CHANGE_THEME, FETCH_SETTINGS, SettingsActionTypes, SettingThemes } from "./types";
+import settingsService from "@client/Services/Settings/settings.service";
 
 export const changeTheme = (theme: SettingThemes) => async (dispatch: Dispatch<SettingsActionTypes>) => {
   dispatch({

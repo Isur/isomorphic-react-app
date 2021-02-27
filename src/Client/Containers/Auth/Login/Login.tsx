@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { login as Login } from "../../../../Common/Redux/Auth";
-import { AppState } from "../../../../Common/Redux/store";
-import { FrontPaths } from "../../../../Common/Routes";
-import { Button, Input, Form } from "../../../Components";
-import useRedirect from "../../../Hooks/useRedirect";
 import { LoginForm, validationSchemas } from "./LoginForm";
+import { useRedirect } from "@client/Hooks";
+import { Button, Input, Form } from "@client/Components";
+import { login as Login } from "@shared/Redux/Auth";
+import { AppState } from "@shared/Redux/store";
+import { PATHS } from "@shared/Constants";
 import "../Auth.scss";
 
 const LoginContainer = () => {
@@ -20,7 +20,7 @@ const LoginContainer = () => {
   };
 
   const handleRegister = () => {
-    redirect(FrontPaths.register);
+    redirect(PATHS.REGISTER);
   };
 
   return (

@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
 import { Inject, Service } from "typedi";
-import { Database } from "../../Utils";
 import { CreateUser } from "./interfaces/createUser.interface";
 import { SearchUser } from "./interfaces/search.interface";
+import { Database } from "@server/Utils";
 
 @Service()
 class UsersRepository {

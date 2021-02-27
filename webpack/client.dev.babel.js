@@ -1,5 +1,6 @@
 import path from "path";
 import webpack from 'webpack';
+import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
 
 export default {
   target: "web",
@@ -57,5 +58,8 @@ export default {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
+    plugins: [
+      new TsconfigPathsPlugin()
+    ]
   },
 };

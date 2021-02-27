@@ -4,8 +4,8 @@ import { Inject, Service } from "typedi";
 import BaseController from "../BaseController";
 import { Config } from "../../Config";
 import { ApiValidator, ApiAuth } from "../../Middlewares";
-import { LoginRequestDto, LoginResponseDto, LogoutResponseDto, RegisterRequestDto, RegisterResponseDto } from "../../../Common/ApiDto/auth.dto";
 import AuthService from "./auth.service";
+import { LoginRequestDto, LoginResponseDto, LogoutResponseDto, RegisterRequestDto, RegisterResponseDto } from "@shared/ApiDto/auth.dto";
 
 @Service()
 class AuthController extends BaseController {

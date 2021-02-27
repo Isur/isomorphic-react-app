@@ -3,6 +3,7 @@ import nodeExternals from "webpack-node-externals";
 import webpack from "webpack";
 import Dotenv from "dotenv-webpack";
 import StartServerPlugin from "start-server-webpack-plugin";
+import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
 
 export default {
   target: "async-node",
@@ -50,6 +51,9 @@ export default {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
+    plugins: [
+      new TsconfigPathsPlugin()
+    ]
   },
   plugins: [
     new Dotenv(),

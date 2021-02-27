@@ -1,6 +1,6 @@
 import { Service } from "typedi";
-import { TIME } from "../Constants";
 import { Apps, Cookies, Environment, EnvironmentType } from "./config.interface";
+import { TIME } from "@shared/Constants";
 
 @Service()
 class Config {

@@ -1,4 +1,4 @@
-import { Language } from "./src/Common/Interfaces/Language.interface";
+import { Language } from "@shared/Interfaces/Language.interface";
 
 export {};
 

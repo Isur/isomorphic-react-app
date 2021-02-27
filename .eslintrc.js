@@ -19,6 +19,7 @@ module.exports = {
         version: 'detect',
       },
       "import/resolver": {
+        "typescript": {},
         "node": {
           "extensions": [".js", ".jsx", ".ts", ".tsx"]
         }

@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Input, Form } from "../../../Components";
-import { AuthService } from "../../../Services";
-import useRedirect from "../../../Hooks/useRedirect";
-import { FrontPaths } from "../../../../Common/Routes";
 import { RegisterForm, validationSchemas } from "./RegisterForm";
+import { Button, Input, Form } from "@client/Components";
+import { AuthService } from "@client/Services";
+import useRedirect from "@client/Hooks/useRedirect";
+import { PATHS } from "@shared/Constants";
 import "../Auth.scss";
 
 const RegisterContainer = () => {
@@ -16,7 +16,7 @@ const RegisterContainer = () => {
   };
 
   const handleLogin = () => {
-    redirect(FrontPaths.login);
+    redirect(PATHS.LOGIN);
   };
 
   return (
