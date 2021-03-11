@@ -40,7 +40,6 @@
     "@prisma/client": "^2.15.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
     "connected-react-router": "^6.8.0",
     "cookie-parser": "^1.4.5",

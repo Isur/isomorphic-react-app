@@ -29,6 +29,10 @@ class SessionService {
       expiryTime: session.expiryTime,
     };
   }
+
+  public deleteOldSessions = async (time: number): Promise<number> => {
+    return await this._sessionRepository.deleteOldSessions(time);
+  }
 }
 
 export default SessionService;

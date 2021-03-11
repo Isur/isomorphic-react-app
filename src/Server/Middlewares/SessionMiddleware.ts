@@ -3,9 +3,9 @@ import Container from "typedi";
 import { SessionService } from "../Modules/Sessions";
 import HTTPErrors from "../HttpErrors";
 import JWT from "../Utils/JWT";
-import { MiddlewareFunction } from "./Middleware.interface";
+import { Middleware } from "./Middleware.interface";
 
-class Authenticate implements MiddlewareFunction {
+class SessionMiddleware implements Middleware {
   private readonly _jwt: JWT;
   private readonly _sessionService: SessionService;
   public constructor() {
@@ -13,25 +13,21 @@ class Authenticate implements MiddlewareFunction {
     this._sessionService = Container.get(SessionService);
   }
 
-  public execute = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+  public execute = async (req: Request, res: Response, next: NextFunction) => {
     const token = this._getToken(req);
 
     try {
       const decoded = this._jwt.tokenVerify(token);
-      if(!decoded) throw new HTTPErrors.Unauthorized();
       const session = await this._sessionService.getSession(decoded.sessionid);
       req.session = {
         userid: session.userId,
         id: session.sessionId,
       };
     } catch(error) {
-      if(required) throw new HTTPErrors.Unauthorized();
-      else {
-        req.session = {
-          userid: null,
-          id: null,
-        };
-      }
+      req.session = {
+        userid: null,
+        id: null,
+      };
     } finally {
       next();
     }
@@ -46,4 +42,4 @@ class Authenticate implements MiddlewareFunction {
   }
 }
 
-export default new Authenticate().execute;
+export default new SessionMiddleware().execute;
