@@ -3,9 +3,11 @@ import { Inject, Service } from "typedi";
 import BaseController from "../BaseController";
 import SettingsService from "./settings.service";
 import { SettingsObject } from "@shared/Interfaces/settings.inteface";
+import { API } from "@shared/Constants";
 
 @Service()
 class SettingsController extends BaseController {
+  public basePath = `/${API.SETTINGS}`;
   @Inject()
   private readonly _settingsService: SettingsService;
 

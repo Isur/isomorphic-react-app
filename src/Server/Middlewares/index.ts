@@ -1,4 +1,5 @@
-export { default as ApiAuth } from "./ApiAuth";
+export { default as SessionMiddleware } from "./SessionMiddleware";
+export { default as ApiAuthentication } from "./ApiAuthentication";
 export { default as ApiBadEndpoint } from "./ApiBadEndpoint";
 export { default as ApiError } from "./ApiError";
 export { default as ApiLogger } from "./ApiLogger";

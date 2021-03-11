@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { Inject, Service } from "typedi";
 import BaseController from "../BaseController";
-import { ApiAuth } from "../../Middlewares";
+import { ApiAuthentication } from "../../Middlewares";
 import UsersService from "./users.service";
 import { MeResponseDto } from "@shared/ApiDto/users.dto";
+import { API } from "@shared/Constants";
 
 @Service()
 class UsersController extends BaseController {
+  public basePath = `/${API.USERS}`;
   @Inject()
   private readonly _usersService: UsersService;
 
@@ -16,7 +18,7 @@ class UsersController extends BaseController {
   }
 
   protected _initRoutes = () => {
-    this.router.get("/me", ApiAuth(true), this.getMe);
+    this.router.get("/me", ApiAuthentication, this.getMe);
   }
 
   public getMe = async (req: Request, res: Response<MeResponseDto>) => {
