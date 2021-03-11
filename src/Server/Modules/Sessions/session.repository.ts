@@ -31,4 +31,10 @@ export default class SessionRepository {
     const session = await this._db.client.session.findFirst({ where: { id: sessionId } });
     return session;
   }
+
+  public deleteOldSessions = async (time: number): Promise<number> => {
+    const dateToRemove = new Date(Date.now() - time);
+    const deleted = await this._db.client.session.deleteMany({ where: { expiryTime: { lt: dateToRemove } } });
+    return deleted.count;
+  }
 }

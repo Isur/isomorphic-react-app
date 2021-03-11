@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
-import { body } from "express-validator";
 import { Inject, Service } from "typedi";
 import BaseController from "../BaseController";
 import { Config } from "../../Config";
-import { ApiValidator, ApiAuth } from "../../Middlewares";
+import { ApiValidator, ApiAuthentication } from "../../Middlewares";
+import { loginValidation, registerValidation } from "./validations";
 import AuthService from "./auth.service";
 import { LoginRequestDto, LoginResponseDto, LogoutResponseDto, RegisterRequestDto, RegisterResponseDto } from "@shared/ApiDto/auth.dto";
+import { API } from "@shared/Constants";
 
 @Service()
 class AuthController extends BaseController {
+  public basePath = `/${API.AUTH}`
   @Inject()
   private readonly _config: Config
 
@@ -21,22 +23,9 @@ class AuthController extends BaseController {
   }
 
   protected _initRoutes = (): void => {
-    this.router.post("/login", ApiValidator([
-      body("login").isString()
-        .notEmpty(),
-      body("password").isString()
-        .notEmpty(),
-    ]), this.login);
-    this.router.post("/register", ApiValidator([
-      body("email").isEmail()
-        .notEmpty(),
-      body("password").isString()
-        .isLength({ min: 8 }),
-      body("confirmPassword").isString(),
-      body("username").isString()
-        .notEmpty(),
-    ]), this.register);
-    this.router.post("/logout", ApiAuth(true), this.logout);
+    this.router.post("/login", ApiValidator(loginValidation), this.login);
+    this.router.post("/register", ApiValidator(registerValidation), this.register);
+    this.router.post("/logout", ApiAuthentication, this.logout);
   }
 
   public login = async (req: Request<{}, {}, LoginRequestDto>, res: Response<LoginResponseDto>) => {

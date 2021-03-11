@@ -34,9 +34,11 @@ async function reloadApp() {
 
 Logger.Log(`
   Isomorphic App listening on port ${chalk.red.bold(port)}
-  Env: ${chalk.yellow.bold(env)}
-  ${env === "development" && `Address: http://localhost:${port}`}
- `);
+  Env: ${chalk.yellow.bold(env)}`);
+
+if(env === "development") {
+  Logger.Log(`  Address: http://localhost:${port}\n`);
+}
 
 process.on("unhandledRejection", (reason: string, promise: Promise<unknown>) => {
   console.error("unhandledRejection");
