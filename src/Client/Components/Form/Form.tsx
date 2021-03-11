@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 interface FormProps<T> {
   defaultValues?: Partial<Record<keyof T, unknown>>,
   error?: Partial<Record<keyof T, string>>,
   children: JSX.Element | JSX.Element[],
-  onSubmit: (data: T) => void,
+  onSubmit: SubmitHandler<T>,
   validation: { [key: string]: unknown },
   translation?: string,
 }

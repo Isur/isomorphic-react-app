@@ -1,6 +1,6 @@
 import path from "path";
 import webpack from 'webpack';
-import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 export default {
   target: "web",
@@ -48,11 +48,11 @@ export default {
       },
       {
         test: /\.scss$/,
-        loader: ["style-loader", "css-loader", "sass-loader"],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.css$/,
-        loader: ['style-loader', "css-loader"],
+        use: ['style-loader', "css-loader"],
       },
     ],
   },
