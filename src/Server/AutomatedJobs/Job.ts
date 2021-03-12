@@ -7,6 +7,6 @@ export abstract class Job {
   public Run = async () => {
     Logger.Log(`Start Job ${this.name}...`);
     await this.execute();
-    Logger.Log(`Job ${this.name} finished`);
+    Logger.Log(`Job ${this.name} finished.`);
   }
 }

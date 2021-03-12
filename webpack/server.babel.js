@@ -1,7 +1,8 @@
 import path from "path";
 import nodeExternals from 'webpack-node-externals';
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import TsconfigPathsPlugin from'tsconfig-paths-webpack-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 
 export default {
@@ -26,6 +27,7 @@ export default {
         { from: "./tsconfig.json", to: "tsconfig.json" }
       ]
     }),
+    new ForkTsCheckerWebpackPlugin({ eslint: { files: "./src/**/*.{ts,tsx}" } }),
   ],
   externals: [nodeExternals()],
   module: {
@@ -42,7 +44,10 @@ export default {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: ["awesome-typescript-loader"],
+        loader: "ts-loader",
+        options: {
+          transpileOnly: true,
+        }
       },
       {
         enforce: "pre",

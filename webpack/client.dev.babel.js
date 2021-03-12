@@ -1,6 +1,7 @@
 import path from "path";
 import webpack from 'webpack';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default {
   target: "web",
@@ -20,6 +21,7 @@ export default {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new ForkTsCheckerWebpackPlugin({ eslint: { files: "./src/**/*.{ts,tsx}" } }),
   ],
   optimization: {
     namedModules: true,
@@ -39,7 +41,10 @@ export default {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: ["awesome-typescript-loader"],
+        loader: "ts-loader",
+        options: {
+          transpileOnly: true,
+        }
       },
       {
         enforce: "pre",

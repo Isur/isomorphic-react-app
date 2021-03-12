@@ -26,9 +26,7 @@ class App {
   }
 
   private async _initJobs() {
-    Logger.Log("Start init jobs...");
     await this.startJobs.startJobs();
-    Logger.Log("Init jobs finished.");
   }
 
   private _initMiddlewares() {
